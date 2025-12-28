@@ -15,4 +15,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SVMD.settings')
 
 application = get_wsgi_application()
 
-# app=application
+# vercel deploy --prod
+
+app=application
+
+# vercel deploy --prod end

@@ -23,14 +23,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#-dhudma9ui3d0r)(37)7f*v9jq9@et^p-o500z%v+wtkb)zvy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
+
+# vercel deploy --prod
+
+DEBUG = False
+ALLOWED_HOSTS = ['svmd.vercel.app', '*']
+
+# vercel deploy --prod end
 
 # Application definition
 
 INSTALLED_APPS = [
+    # vercel deploy --prod
+    'whitenoise.runserver_nostatic',
+    # vercel deploy --prod end
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,6 +63,9 @@ TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # vercel deploy --prod
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # vercel deploy --prod end
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,6 +141,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# vercel deploy --prod
+STATICFILES_DIRS = [
+    BASE_DIR / "main" / "static",
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# vercel deploy --prod end
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
