@@ -1,0 +1,91 @@
+
+
+<!-- Back to Top: floating button -->
+<div id="back-to-top" class="back-to-top" role="button" aria-label="Scroll to top" tabindex="0" title="Back to top" aria-hidden="true">
+    <!-- Inline SVG icon -->
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+</div>
+
+<style>
+/* Back to Top - self-contained styles (responsive and accessible) */
+.back-to-top {
+  --size: clamp(44px, 6vw, 64px);
+  position: fixed;
+  right: clamp(12px, 3vw, 32px);
+  bottom: clamp(12px, 3vh, 32px);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,#f59e0b 0%, #d97706 100%);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 220ms ease, transform 220ms ease;
+  z-index: 1100;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.back-to-top svg { width: 44%; height: 44%; display:block; }
+
+.back-to-top:focus { outline: none; box-shadow: 0 0 0 6px rgba(245,158,11,0.14); }
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top, .back-to-top.show { transition: none; }
+}
+</style>
+
+<script>
+/* Vanilla JS: show button after scroll threshold and smooth-scroll to top.
+   - Respects "prefers-reduced-motion".
+   - Keyboard accessible (Enter / Space triggers action).
+   - Lightweight and dependency-free.
+*/
+(function () {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+
+  const SCROLL_OFFSET = 350; // show button after this many px scrolled
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function onScroll() {
+    if (window.scrollY > SCROLL_OFFSET) {
+      btn.classList.add('show');
+      btn.setAttribute('aria-hidden', 'false');
+    } else {
+      btn.classList.remove('show');
+      btn.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  function scrollToTop() {
+    if (prefersReduced) {
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  btn.addEventListener('click', (e) => { e.preventDefault(); scrollToTop(); });
+
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault(); scrollToTop();
+    }
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  // init visibility
+  onScroll();
+})();
+</script>

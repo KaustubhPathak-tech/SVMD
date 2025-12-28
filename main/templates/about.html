@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}About - Mandiram{% endblock %}
+
+{% block content %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Mandiram Trust</title>
+  {% load static %}
+  <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+  <style>
+    /* Mandiram page specific — keep styles scoped and minimal to avoid global overrides */
+    /* Avoid global resets here; base styles live in `styles.css` */
+
+    /* Mandiram trust intro styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .trust-intro {
+      padding: clamp(18px, 4vh, 36px) 0;
+      background: linear-gradient(180deg, #fff, #f9fafb);
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+
+    .trust-image img {
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .trust-content {
+      padding: 0 0 0 3vw;
+    }
+
+    .trust-content h1 {
+      margin-top: 0;
+      font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+      color: #1b1b1f;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: #374151;
+      margin-bottom: 12px;
+    }
+
+    .trust-facts {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 18px 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      width: 48vw;
+    }
+
+    .trust-facts li {
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      color: #374151;
+    }
+
+    .trust-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 12px;
+    }
+
+    .trustees-list {
+      list-style: none;
+      padding-left: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .trust-mission {
+      margin-top: 22px;
+    }
+
+    /* Desktop layout */
+    @media (min-width: 768px) {
+      .trust-grid {
+        grid-template-columns: 48% 52%;
+      }
+
+      .trust-facts {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .container {
+        padding: 40px 24px;
+      }
+    }
+
+    /* Greetings section */
+    .trust-greetings {
+      background: linear-gradient(180deg, #fff, #f7f9fc);
+      padding: 24px 0;
+      border-top: 1px solid rgba(17, 24, 39, 0.04);
+      margin-top: 18px;
+    }
+
+    .trust-greetings h2 {
+      margin-top: 0;
+      color: #0f172a;
+      font-size: clamp(1.125rem, 2.4vw, 1.5rem);
+    }
+
+    .greeting-lead {
+      color: #374151;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 768px) {
+      .trust-greetings .container {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="trust-intro">
+    <div class="container trust-grid">
+      <div class="trust-image">
+        <!-- Replace the src with a local static image if you add one to your project -->
+        <img src="/static/images/temple.jpg" alt="Mandiram Temple" />
+      </div>
+
+      <div class="trust-content">
+        <h1>Mandiram Trust</h1>
+        <p class="lead">Mandiram is a charitable trust devoted to preserving temple heritage, serving the community
+          through education, health camps, and cultural programs, and supporting families in need.</p>
+        <p>Founded with a vision of compassion and service, Mandiram organises annual festivals, provides scholarships,
+          and runs free medical camps reaching thousands each year.</p>
+
+        <ul class="trust-facts">
+          <li><strong>Established:</strong> 1998</li>
+          <li><strong>Registration No.:</strong> REG-1998-001</li>
+          <li><strong>Founder:</strong> Sri Raghavendra Pillai</li>
+          <li><strong>Mission:</strong> Preserve temple heritage &amp; uplift the local community</li>
+          <li><strong>Contact:</strong> +91 98765 43210 | <a href="mailto:info@mandiram.org">info@mandiram.org</a></li>
+        </ul>
+
+        <div class="trust-actions">
+          <a class="btn donate-btn" href="/donation-options">Donate</a>
+          <a class="btn" href="/contact-us">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="text-center trust-greetings container">
+    <h2>Message from the Trust</h2>
+    <p class="greeting-lead"><strong>Greetings:</strong> On behalf of the Mandiram Trust, we extend warm wishes to
+      everyone. Our motivation is to encourage spiritual harmony, compassion, and ethical living—promoting respect among
+      all faiths and communities through service, education, and cultural exchange.</p>
+  </section>
+</body>
+
+</html>
+
+{% endblock %}

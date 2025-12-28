@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}Donation Options - Mandiram{% endblock %}
+
+
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Mandiram Trust</title>
+    {% load static %}
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .bank-details,
+        .donation-section,
+        .disclaimer {
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Bank details — logo left, info center, QR right */
+        .bank-details {
+            display: grid;
+            grid-template-columns: 140px 1fr 160px;
+            gap: 20px;
+            align-items: center;
+            padding: 22px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #ffffff, #fbfbfd);
+        }
+
+        .bank-details .bank-logo img {
+            max-width: 120px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0;
+            /* logo sits flush at left */
+        }
+
+        .bank-details .bank-info h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.25rem;
+            color: #0f172a;
+        }
+
+        .bank-details .bank-info p {
+            margin: 6px 0;
+            color: #374151;
+            font-size: 0.98rem;
+        }
+
+        .bank-details .bank-info small {
+            color: #6b7280;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .bank-details .bank-qr {
+            text-align: right;
+        }
+
+        .bank-details .bank-qr img {
+            max-width: 140px;
+            width: 100%;
+            height: auto;
+            display: inline-block;
+        }
+
+        .bank-details .bank-disclaimer {
+            grid-column: 1 / -1;
+            margin-top: 12px;
+            padding: 12px;
+            background: linear-gradient(180deg, #fffaf0, #fff7ed);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 136, 0, 0.08);
+            color: #92400e;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 767px) {
+            .bank-details {
+                grid-template-columns: 1fr;
+                text-align: left;
+            }
+
+            .bank-details .bank-logo,
+            .bank-details .bank-info,
+            .bank-details .bank-qr {
+                width: 100%;
+            }
+
+            .bank-details .bank-qr {
+                text-align: left;
+                margin-top: 12px;
+            }
+        }
+
+        .qr-code {
+            text-align: center;
+        }
+
+        /* Donate intro styles */
+        .donate-intro {
+            background: linear-gradient(180deg, #fffaf0, #ffffff);
+            padding: 48px 0;
+            border-radius: 12px;
+            margin-bottom: 18px;
+        }
+
+        .donate-intro .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .donate-intro .intro-content h1 {
+            margin: 0 0 12px 0;
+            font-size: 1.8rem;
+            color: #111827;
+            text-align: left;
+        }
+
+        .donate-intro .intro-content p {
+            color: #374151;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 16px;
+        }
+
+        .donate-cta {
+            display: flex;
+            gap: 12px;
+        }
+
+        .donate-cta .btn {
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+        }
+
+        .donate-cta .btn.primary {
+            background: #ff8800;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .donate-cta .btn.secondary {
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            color: #111827;
+        }
+
+        .donate-intro .intro-image img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            height: 220px;
+        }
+
+        @media (max-width: 767px) {
+            .donate-intro .container {
+                grid-template-columns: 1fr;
+            }
+
+            .donate-intro .intro-image {
+                order: 2;
+            }
+
+            .donate-intro .intro-content {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="donate-intro">
+        <div class="container">
+            <div class="intro-content">
+                <h1>Support the Mandiram Trust</h1>
+                <p>Your donation helps preserve cultural heritage, fund community programs, and support those in need.
+                    Even
+                    small contributions make a large impact over time.</p>
+                <div class="donate-cta">
+                    <a class="btn primary" href="/donate">Donate Now</a>
+                    <a class="btn secondary" href="/contact-us">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="bank-details">
+        <div class="bank-logo">
+            <img src="/static/images/pnb.jpg" alt="PNB Logo">
+        </div>
+
+        <div class="bank-info">
+            <h2>Bank Details</h2>
+            <p><strong>Account Name:</strong> SHRI VAISHNO MATA JI MANDIR GAYATRI DHAM</p>
+            <p><strong>Bank Name:</strong> Punjab National Bank (PNB)</p>
+            <p><strong>Account Number:</strong> 000123456789</p>
+            <p><strong>IFSC Code:</strong> PUNB0123456</p>
+            <p><strong>Branch:</strong> Main Branch, New Delhi</p>
+            <p><strong>UPI ID:</strong> 7798257964@pnb</p>
+            <small>Use the above details for NEFT/RTGS/IMPS. Please mention <em>"Donation"</em> in the payment remarks
+                and
+                keep the receipt for tax purposes.</small>
+        </div>
+
+        <div class="bank-qr">
+            <img src="{% static 'images/trustQR.png' %}" alt="UPI QR Code">
+        </div>
+
+        <div class="bank-disclaimer" role="note" aria-label="donation disclaimer">
+            <strong>Disclaimer:</strong> Your donations are eligible for tax deductions under Section 80G of the Income
+            Tax
+            Act, 1961. Please keep your donation receipt for tax purposes. For queries, contact <a
+                href="mailto:info@mandiram.org">info@mandiram.org</a>.
+        </div>
+    </div>
+
+</body>
+
+</html>
+{% endblock %}

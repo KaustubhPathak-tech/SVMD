@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{% block title %}Site{% endblock %}</title>
+  {% load static %}
+  <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  {% block extra_css %}
+  <style>
+    /* Page header / breadcrumbs */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      -webkit-user-select: none;
+      user-select: none;
+      /* disable text selection */
+    }
+
+    /* scrolling error bug fix */
+    
+    #warnBox {
+      pointer-events: none !important;
+    }
+
+    /* 🔥 NEW — smooth slideshow performance */
+    
+
+    /* 🔥 NEW */
+    
+
+    /* 🔥 CHANGED */
+    
+
+    /* 🔥 NEW */
+    
+
+    /* scroliing ended */
+
+    .page-header {
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.06), rgba(255, 255, 255, 0));
+      padding: clamp(20px, 4.5vh, 56px) 0;
+    }
+
+    .page-header .container {
+      width: 85vw;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: clamp(20px, 4vw, 64px);
+      box-sizing: border-box;
+    }
+
+    .page-title {
+      margin: 0 0 6px 0;
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .breadcrumbs {
+      margin-top: 12px;
+      font-size: 1rem;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumbs a {
+      color: #6b7280;
+      text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+      color: #111827;
+    }
+
+    .breadcrumb-sep {
+      color: #9ca3af;
+      margin: 0 6px;
+    }
+
+    /* global css */
+
+    .intro {
+      min-height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2vh 0 0 5vw;
+      /* align-items: center; */
+    }
+
+    .btn {
+      padding: 4px 8px;
+      max-width: 20vw;
+    }
+
+    /* global css ended */
+
+
+    /* Centered small warning toast (force above custom CSS) */
+    #warnBox.warn-container {
+      position: fixed !important;
+      inset: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: none !important;
+      z-index: 2147483647 !important;
+    }
+
+    #warnText.warn-text {
+      background: rgba(17, 24, 39, 0.96) !important;
+      color: #fff !important;
+      padding: 8px 14px !important;
+      border-radius: 10px !important;
+      font-weight: 600 !important;
+      font-size: 0.98rem !important;
+      box-shadow: 0 8px 24px rgba(2, 6, 23, 0.18) !important;
+      max-width: 90vw !important;
+      text-align: center !important;
+      opacity: 0 !important;
+      transform: translateY(6px) scale(0.98) !important;
+      transition: opacity 180ms ease, transform 180ms ease !important;
+      pointer-events: none !important;
+    }
+
+    #warnText.warn-text.show {
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+      pointer-events: auto !important;
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 1.2rem;
+      }
+
+      .page-header {
+        padding: clamp(12px, 3vh, 20px) 0;
+      }
+    }
+
+    /* Position + compact size */
+    /* #google_translate_element {
+      position: fixed;
+      overflow: hidden;
+      top: 10vh;
+      left: 2vw;
+      z-index: 1000;
+      background: rgba(255, 255, 255, .95);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 4px 6px !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .12), 0 2px 8px rgba(0, 0, 0, .08);
+      transform: scale(.8);
+      transform-origin: top left;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 240px;
+      border: 5px solid red;
+
+    }
+
+    .VIpgJd-ZVi9od-xl07Ob-lTBxed {
+      width: 120px !important;
+    }
+
+    #google_translate_element:hover {
+      transform: scale(.9) translateY(-2px);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .goog-te-banner-frame {
+      display: none !important;
+    }
+
+    .goog-te-gadget-simple {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px;
+      padding: 2px 6px !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+    }
+
+    .goog-te-gadget-simple br {
+      display: none !important;
+    }
+
+    .goog-te-gadget-simple .goog-te-menu-value {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+    }
+
+    .goog-te-gadget-simple span,
+    .goog-te-gadget-simple img {
+      vertical-align: middle !important;
+      line-height: 1 !important;
+    }
+
+    @media (max-width: 600px) {
+      #google_translate_element {
+        transform: scale(.65);
+      }
+    }
+
+    @media (max-width: 768px) {
+      #google_translate_element {
+        bottom: 20px;
+        left: 20px;
+        max-width: 300px;
+      }
+    }  */
+
+
+    /* ---- Compact, Single-Line Google Translate Widget ---- */
+
+    #google_translate_element {
+      position: fixed;
+      bottom: 10vh;
+      left: 2vw;
+      z-index: 1000;
+      background: rgba(255, 255, 255, .95);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      padding: 4px 8px;
+      /* 🔹 Reduced padding */
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+      transform-origin: top left;
+      width: auto;
+      /* 🔹 Auto width for true compact fit */
+      white-space: nowrap;
+    }
+
+    /* 🔹 Forces widget into a single clean row */
+    .goog-te-gadget-simple {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px;
+      padding: 0 !important;
+      /* 🔹 Remove extra padding */
+      border: none !important;
+      background: transparent !important;
+      white-space: nowrap !important;
+    }
+
+    /* 🔹 Prevent Google from inserting weird breaks */
+    .goog-te-gadget-simple br {
+      display: none !important;
+    }
+
+    /* 🔹 Align text + arrow perfectly */
+    .goog-te-menu-value {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px;
+      white-space: nowrap !important;
+    }
+
+    /* 🔹 Remove unnecessary spacing */
+    .goog-te-gadget-simple span,
+    .goog-te-gadget-simple img {
+      vertical-align: middle !important;
+      line-height: 1 !important;
+    }
+
+    /* 🔹 Make dropdown button smaller & tighter */
+    .VIpgJd-ZVi9od-xl07Ob-lTBxed {
+      width: auto !important;
+      font-size: 12px !important;
+    }
+
+    /* Hover effect — subtle & premium */
+    #google_translate_element:hover {
+      /* transform: scale(.9) translateY(-2px); */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
+    }
+
+    /* Hide top banner */
+    .goog-te-banner-frame {
+      display: none !important;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      #google_translate_element {
+        transform: scale(.7);
+      }
+    }
+
+    /* Force everything inside widget into one line */
+    #google_translate_element .goog-te-gadget-simple,
+    #google_translate_element .goog-te-menu-value,
+    #google_translate_element span,
+    #google_translate_element a {
+      display: inline-flex !important;
+      align-items: center !important;
+      white-space: nowrap !important;
+    }
+
+    /* Kill Google's forced width */
+    #google_translate_element .VIpgJd-ZVi9od-xl07Ob-lTBxed {
+      width: auto !important;
+    }
+
+    /* Remove stray breaks */
+    #google_translate_element br {
+      display: none !important;
+    }
+  </style>
+
+  {% endblock %}
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+  <div id="google_translate_element" class="fixed bottom-4 left-4 z-999999">
+  </div>
+
+  <section class="page-header" aria-label="Page header">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumbs">{% block breadcrumbs %}{% endblock %}</nav>
+    </div>
+  </section>
+
+  {% block content %}{% endblock %}
+
+  <!-- Auto breadcrumb script: builds breadcrumbs from URL path if the template hasn't provided them -->
+  <script>
+    (function () {
+      function titleize(segment) {
+        try {
+          segment = decodeURIComponent(segment);
+        } catch (e) { }
+        return String(segment).replace(/[-_]+/g, ' ').split(' ').filter(Boolean)
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const nav = document.querySelector('.breadcrumbs');
+        if (!nav) return;
+        // If breadcrumbs were rendered server-side, don't overwrite them
+        if (nav.textContent.trim().length > 0) return;
+
+        const pathname = window.location.pathname.replace(/(^\/|\/$)/g, '');
+        const crumbs = [];
+        crumbs.push({ name: 'Home', href: '/' });
+
+        if (pathname) {
+          const parts = pathname.split('/').filter(Boolean);
+          let acc = '';
+          parts.forEach((p) => {
+            acc += '/' + p;
+            crumbs.push({ name: titleize(p), href: acc });
+          });
+        }
+
+        // Render breadcrumb elements
+        nav.innerHTML = '';
+        crumbs.forEach((c, i) => {
+          const isLast = i === crumbs.length - 1;
+          if (!isLast) {
+            const a = document.createElement('a');
+            a.href = c.href;
+            a.textContent = c.name;
+            a.setAttribute('aria-label', c.name);
+            nav.appendChild(a);
+
+            const sep = document.createElement('span');
+            sep.className = 'breadcrumb-sep';
+            sep.textContent = '›';
+            nav.appendChild(sep);
+          } else {
+            const span = document.createElement('span');
+            span.textContent = c.name;
+            span.setAttribute('aria-current', 'page');
+            nav.appendChild(span);
+
+            // If page-title is empty, set it for nicer headings
+            const titleEl = document.querySelector('.page-title');
+            if (titleEl && !titleEl.textContent.trim()) {
+              titleEl.textContent = c.name;
+            }
+          }
+        });
+      });
+    })();
+  </script>
+
+
+  <div id="warnBox" class="warn-container hidden" aria-hidden="true">
+    <div id="warnText" class="warn-text" role="status" aria-live="polite">Content protection enabled. Action blocked.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      let _warnTimer = null;
+
+      window.warn = function (message = 'Action blocked', duration = 1400) {
+        const box = document.getElementById('warnText');
+        if (!box) return;
+        box.textContent = message;
+        box.setAttribute('aria-hidden', 'false');
+        box.classList.add('show');
+
+        if (_warnTimer) clearTimeout(_warnTimer);
+        _warnTimer = setTimeout(() => {
+          box.classList.remove('show');
+          box.setAttribute('aria-hidden', 'true');
+          _warnTimer = null;
+        }, duration);
+      };
+
+      // Disable Right Click
+      document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        warn();
+      });
+
+      // Disable Double Click
+      document.addEventListener('dblclick', e => {
+        e.preventDefault();
+        warn();
+      });
+
+      // Disable Keyboard Shortcuts
+      document.addEventListener('keydown', e => {
+        // Ctrl + U
+        if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+          e.preventDefault();
+          warn();
+        }
+
+        // Ctrl + C
+        if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+          e.preventDefault();
+          warn();
+        }
+
+        // Ctrl + Shift + I / J 
+        // (DevTools) — not blocked to allow debugging in development
+        if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
+          e.preventDefault();
+          warn();
+        }
+        // Save Page Ctrl + S
+        if (e.ctrlKey && e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          warn();
+        }
+
+        // F12 DevTools
+        if (e.key === 'F12') {
+          e.preventDefault();
+          warn();
+        }
+      });
+    })();
+  </script>
+
+  <!-- google translate widget script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        { pageLanguage: 'en', includedLanguages: 'en,hi,bn,ta,te,ml,gu,kn,pa,mr,ur,as,or,sa,sd', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+        'google_translate_element'
+      );
+    }
+
+    (function monitorGoogleBanner() {
+      const hideBanner = () => {
+        document
+          .querySelectorAll('.VIpgJd-ZVi9od-ORHb-OEVmcd')
+          .forEach(el => el.style.setProperty('display', 'none', 'important'));
+
+        document.body.style.setProperty('top', '0px', 'important');
+      };
+
+      // Hide immediately
+      hideBanner();
+
+      // Watch DOM for injected elements
+      const observer = new MutationObserver(() => hideBanner());
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    })();
+
+    //home page bread disabled
+    document.addEventListener("DOMContentLoaded", () => {
+      const isHome = window.location.pathname === "/" || window.location.pathname === "";
+      const breadcrumbs = document.querySelector(".breadcrumbs");
+
+      if (isHome && breadcrumbs) {
+        breadcrumbs.style.display = "none";
+      }
+    });
+  </script>
+
+
+  <!-- //dynamic changes in google widget -->
+  <script>
+    function addChooseLanguageOption() {
+      const combo = document.querySelector(".goog-te-combo");
+      if (!combo) return;
+
+      // If placeholder does not exist, create it
+      const exists = [...combo.options].some(o => o.value === "");
+      if (!exists) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.text = "Choose Language";
+        opt.selected = true;
+        opt.disabled = true;
+        combo.insertBefore(opt, combo.firstChild);
+      }
+
+      // Always force dropdown to display placeholder
+      combo.selectedIndex = 0;
+    }
+    function replaceSelectLanguage() {
+      const target = document.querySelector('.VIpgJd-ZVi9od-xl07Ob-lTBxed span');
+      if (target && target.innerText.trim().includes("Select Language")) {
+        target.innerText = "Language";
+      }
+    }
+    // Run immediately in case already loaded
+    addChooseLanguageOption();
+    replaceSelectLanguage();
+    // Watch DOM for Google updates after translations
+    const observer = new MutationObserver(() => addChooseLanguageOption());
+    const secondobserver = new MutationObserver(() => replaceSelectLanguage());
+    observer.observe(document.body, { childList: true, subtree: true });
+    secondobserver.observe(document.body, { childList: true, subtree: true });
+
+  </script>
+
+
+
+
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+  {% include "footer.html" %}
+
+  {% include 'scroll_to_top.html' %}
+</body>
+
+</html>

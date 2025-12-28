@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Footer base (responsive units) */
+        footer {
+            background: linear-gradient(180deg, #081225 0%, #0b1220 100%);
+            color: #e6eef8;
+            padding: 6vh 0 4vh;
+            /* vertical spacing uses vh */
+            padding-inline: 0;
+            /* controlled on container */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        footer h3 {
+            color: #ffffff;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        footer p,
+        footer li {
+            color: rgba(230, 238, 248, 0.88);
+            font-size: 0.95rem;
+        }
+
+        footer .link {
+            color: rgba(230, 238, 248, 0.76);
+            text-decoration: none;
+            transition: color 180ms ease;
+        }
+
+        footer .link:hover {
+            color: #f59e0b;
+        }
+
+        footer .container {
+            width: 85vw;
+            /* responsive width */
+            max-width: 1100px;
+            margin: 0 auto;
+            /* center container */
+            padding-inline: clamp(16px, 3vw, 48px);
+            /* responsive horizontal padding */
+            box-sizing: border-box;
+        }
+
+        /* prefer larger gaps inside footer (responsive) */
+        footer .container.grid {
+            gap: clamp(12px, 1.8vw, 28px);
+        }
+
+        /* removed default top border usage; bottom line will be styled via .footer-bottom */
+        footer .border-t {
+            display: none;
+        }
+
+        /* Social icons */
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .social-icons .social {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: clamp(44px, 6vw, 64px);
+            height: clamp(44px, 6vw, 64px);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 6px 18px rgba(3, 7, 18, 0.45);
+            transition: transform 200ms cubic-bezier(.2, .9, .2, 1), box-shadow 200ms ease, background 200ms ease, opacity 200ms ease;
+            cursor: pointer;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .social-icons .social .fa {
+            font-size: 20px;
+            display: block;
+        }
+
+        .social-icons .social:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(3, 7, 18, 0.6);
+        }
+
+        /* Platform color accents on hover */
+        .social-icons .social.facebook:hover {
+            background: linear-gradient(135deg, #3b5998, #2d4373);
+        }
+
+        .social-icons .social.instagram:hover {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+
+        .social-icons .social.twitter:hover {
+            background: linear-gradient(135deg, #1da1f2, #0d95e8);
+        }
+
+        .social-icons .social.linkedin:hover {
+            background: linear-gradient(135deg, #0a66c2, #004182);
+        }
+
+        .social-icons .social:focus {
+            outline: none;
+            box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.10);
+        }
+
+        /* Footer bottom line */
+        .footer-bottom {
+            color: rgba(230, 238, 248, 0.7);
+            font-size: 0.95rem;
+            margin-top: 2vh;
+            width: 85vw;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: clamp(16px, 2vh, 28px);
+            text-align: center;
+            /* center bottom text to match content centering */
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .social-icons .social {
+                width: clamp(40px, 10vw, 48px);
+                height: clamp(40px, 10vw, 48px);
+            }
+
+            footer {
+                padding: 5vh 0 3.5vh;
+            }
+
+            /* footer bottom centered on small screens */
+            .footer-bottom {
+                text-align: center;
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-top: 18px;
+            }
+
+            footer .container {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <footer class="bg-base-200 text-base-content">
+        <div class="container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+
+            <!-- Brand / About -->
+            <div>
+                <h3 class="text-lg font-bold mb-2">Your Website</h3>
+                <p class="text-sm opacity-80">
+                    A short description about your platform or brand. Delivering value with trust.
+                </p>
+            </div>
+
+            <!-- Important Links -->
+            <div>
+                <h3 class="text-lg font-bold mb-2">Important Links</h3>
+                <ul class="space-y-1">
+                    <li><a class="link link-hover">Home</a></li>
+                    <li><a class="link link-hover">About</a></li>
+                    <li><a class="link link-hover">Services</a></li>
+                    <li><a class="link link-hover">Blog</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div>
+                <h3 class="text-lg font-bold mb-2">Support</h3>
+                <ul class="space-y-1">
+                    <li><a class="link link-hover" href="/policy">Privacy Policy</a></li>
+                    <li><a class="link link-hover"
+                            href="https://merchant.razorpay.com/policy/RuZ0ce06i5agQE/terms">Terms & Conditions</a></li>
+                    <li><a class="link link-hover"
+                            href="https://merchant.razorpay.com/policy/RuZ0ce06i5agQE/refund">Refund Policy</a></li>
+                    <li><a class="link link-hover"
+                            href="https://merchant.razorpay.com/policy/RuZ0ce06i5agQE/shipping">Shipping Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact + Social -->
+            <div>
+                <h3 class="text-lg font-bold mb-2">Contact Us</h3>
+                <p>Email: kaustubhpathak9@gmail.com</p>
+                <p>Phone: +91 8707887106</p>
+
+                <div class="flex gap-3 mt-3 social-icons">
+                    <a class="social facebook" href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a class="social instagram" href="#" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a class="social twitter" href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a class="social linkedin" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom text-center">
+            © {% now "Y" %} Your Website — All Rights Reserved
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}Location{% endblock %}
+
+
+
+{% block content %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Reach</title>
+    {% load static %}
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .how-to-reach .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Section-specific: stack location details and map vertically */
+        .how-to-reach .content {
+            grid-template-columns: 1fr;
+            /* single column layout */
+            align-items: start;
+        }
+
+        .info {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .info h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .info p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .map-container {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="how-to-reach">
+        <div class="container">
+            <div class="content">
+                <div class="info">
+                    <h2>Location Details</h2>
+                    <p><strong>Address:</strong></p>
+                    <p>Mandiram Cultural Center<br>
+                        123 Heritage Street<br>
+                        New Delhi, Delhi 110001<br>
+                        India</p>
+
+                    <p><strong>Phone:</strong> +91 11-2345-6789</p>
+                    <p><strong>Email:</strong> info@mandiram.com</p>
+
+                    <h2 style="margin-top: 20px;">Getting Here</h2>
+                    <p><strong>By Metro:</strong> Nearest station is Central Park Metro, 500m away.</p>
+                    <p><strong>By Bus:</strong> Multiple bus routes available. Route 45 and 78 stop nearby.</p>
+                    <p><strong>By Car:</strong> Ample parking available on-site.</p>
+                    <p><strong>By Taxi:</strong> Use Google Maps or local taxi apps for navigation.</p>
+                </div>
+
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.7789850849836!2d77.20245!3d28.605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2e08e3f3f3f%3A0x123456789!2sNew%20Delhi!5e0!3m2!1sen!2sin!4v1234567890"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                        title="maps"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+{% endblock %}

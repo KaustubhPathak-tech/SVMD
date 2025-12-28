@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Trust Members - Mandiram{% endblock %}
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Mandiram Trust</title>
+    {% load static %}
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+            overflow: hidden;
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+        }
+
+        .member-image {
+            width: 100%;
+            height: 240px;
+            background-color: #e9f0f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .member-info {
+            padding: 24px;
+        }
+
+        .member-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+
+        .member-details {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Members section — spacious and simple background */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            padding: 32px;
+            margin-top: 24px;
+            background: linear-gradient(180deg, #ffffff 0%, #f7fbfd 100%);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 767px) {
+            .members-grid {
+                padding: 20px;
+                gap: 18px;
+            }
+
+            .member-image {
+                height: 180px;
+            }
+        }
+
+        /* Intro section with image on the right (left-aligned text + subtle background) */
+        .intro-section {
+            background: #f7fafc;
+            /* subtle off-white background */
+            padding: 40px 0;
+        }
+
+        .intro-section .container {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 24px;
+            align-items: center;
+            max-width: 1100px;
+        }
+
+        .intro-content {
+            text-align: left;
+            /* override global centered headings */
+        }
+
+        .intro-content h1 {
+            margin: 0 0 12px 0;
+            font-size: 1.75rem;
+            color: #1b1b1f;
+            text-align: left;
+        }
+
+        .intro-content p {
+            color: #374151;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .intro-section .container {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-image {
+                order: 2;
+            }
+
+            .intro-content {
+                order: 1;
+                padding-bottom: 16px;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="intro-section">
+        <div class="container">
+            <div class="intro-content">
+                <h1>Trust Members</h1>
+                <p>Mandiram Trust is committed to preserving temple traditions and supporting the local community
+                    through
+                    education, healthcare camps, festivals, and social services. Our members work collaboratively to
+                    manage
+                    programmes, maintain temple heritage, and serve those in need.</p>
+            </div>
+            <div class="intro-image">
+                <img src="{% static 'images/temple.jpg' %}" alt="Mandiram Temple">
+            </div>
+        </div>
+    </section>
+
+    <!-- members -->
+    <section class="members-section">
+
+
+        <div class="container">
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-image">Profile Image</div>
+                    <div class="member-info">
+                        <div class="member-name">John Doe</div>
+                        <div class="member-role">Chairperson</div>
+                        <div class="member-details">
+                            <p>Email: john@trust.com</p>
+                            <p>Phone: +1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-image">Profile Image</div>
+                    <div class="member-info">
+                        <div class="member-name">Jane Smith</div>
+                        <div class="member-role">Vice Chairperson</div>
+                        <div class="member-details">
+                            <p>Email: jane@trust.com</p>
+                            <p>Phone: +1 (555) 234-5678</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-image">Profile Image</div>
+                    <div class="member-info">
+                        <div class="member-name">Robert Brown</div>
+                        <div class="member-role">Treasurer</div>
+                        <div class="member-details">
+                            <p>Email: robert@trust.com</p>
+                            <p>Phone: +1 (555) 345-6789</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-image">Profile Image</div>
+                    <div class="member-info">
+                        <div class="member-name">Sarah Wilson</div>
+                        <div class="member-role">Secretary</div>
+                        <div class="member-details">
+                            <p>Email: sarah@trust.com</p>
+                            <p>Phone: +1 (555) 456-7890</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-image">Profile Image</div>
+                    <div class="member-info">
+                        <div class="member-name">Michael Davis</div>
+                        <div class="member-role">Member</div>
+                        <div class="member-details">
+                            <p>Email: michael@trust.com</p>
+                            <p>Phone: +1 (555) 567-8901</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-image">Profile Image</div>
+                    <div class="member-info">
+                        <div class="member-name">Emily Taylor</div>
+                        <div class="member-role">Member</div>
+                        <div class="member-details">
+                            <p>Email: emily@trust.com</p>
+                            <p>Phone: +1 (555) 678-9012</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</body>
+
+</html>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Mandiram Trust</title>
+  {% load static %}
+  <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <section class="intro">
+    <a href="{% url 'core:view_profile' %}" class="btn btn-primary">View Profile</a>
+    <a href="{% url 'core:edit_profile' %}" class="btn btn-secondary  ">Edit Profile</a>
+
+  </section>
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Mandiram</title>
+    <style>
+        .profileCard {
+            padding: 2vh 5vw;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="flex justify-center my-6">
+        <div class="card w-full max-w-md border border-base-300 shadow-2xl profileCard 
+                bg-gradient-to-b from-base-100 to-base-200">
+
+            <!-- Avatar -->
+            <figure class="px-8 pt-8">
+                <img src="{{ user.profile.avatar.url }}" alt="Profile Image"
+                    class="rounded-xl w-40 h-40 object-cover shadow-lg">
+            </figure>
+
+            <!-- Details -->
+            <!-- CHANGES: removed items-center & text-center → added text-left and w-full -->
+            <div class="card-body text-left">
+
+                <h2 class="card-title">{{ user.first_name }} {{ user.last_name }}</h2>
+                <p class="text-sm opacity-80">@{{ user.username }}</p>
+
+                <div class="divider my-2"></div>
+
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Phone:</strong> {{ user.profile.phone }}</p>
+                <p class="max-w-sm">
+                    <strong>Bio:</strong> {{ user.profile.bio }}
+                </p>
+
+                <!-- Button -->
+                <div class="card-actions mt-3">
+                    <a href="{% url 'core:edit_profile' %}" class="btn btn-primary btn-wide">
+                        Edit Profile
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <br />
+</body>
+
+</html>
+{% endblock %}

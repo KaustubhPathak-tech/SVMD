@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Login - Mandiram{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+    <style>
+        .login {
+            margin-bottom: 5vh;
+        }
+
+        .loginForm {
+            padding: 20px !important;
+        }
+
+        .email-input {
+            width: 100%;
+            height: 56px;
+            padding: 0 48px 0 20px;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-input::placeholder {
+            color: rgba(107, 114, 128, 0.7);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            opacity: 1;
+        }
+
+        .email-input:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+        }
+
+        .email-input:focus {
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.2),
+                0 20px 40px rgba(59, 130, 246, 0.15);
+            transform: scale(1.02);
+        }
+
+        .email-input:active {
+            transform: scale(0.99);
+        }
+
+        .email-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(59, 130, 246, 0.6);
+            pointer-events: none;
+        }
+
+        .spacious {
+            margin-bottom: 1rem;
+        }
+        #btnContainer{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        #submitBtn {
+            padding: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login min-h-[70vh] flex justify-center items-center px-4">
+        <div class="card w-full max-w-md bg-base-100 shadow-2xl border border-base-300 loginForm">
+            <div class="card-body">
+                <h2 class="text-3xl font-bold text-center mb-2">User Login</h2>
+                {# Django Messages #}
+                {% if messages %}
+                <div class="space-y-2 mb-2">
+                    {% for message in messages %}
+                    {% if message.tags == "success" %}
+                    <div class="alert alert-success">
+                        <span>{{ message }}</span>
+                    </div>
+                    {% elif message.tags == "error" or message.tags == "danger" %}
+                    <div class="alert alert-error">
+                        <span>{{ message }}</span>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="POST" id="loginForm" class="space-y-4">
+                    {% csrf_token %}
+
+
+                    <div class="form-control w-full max-w-md">
+
+                        <div class="relative">
+
+                            <input type="email" name="email" placeholder="Enter Email Id" class="email-input spacious"
+                                required />
+                        </div>
+
+                    </div>
+
+                    <!-- reCAPTCHA -->
+                    <div class="flex justify-center">
+                        <div class="g-recaptcha" data-sitekey="6Le7QzksAAAAAM4wGT7WRU2uEM942LNli8nXgRH4"
+                            data-callback="enableSubmit" data-expired-callback="disableSubmit"></div>
+                    </div>
+                    <br/>
+                    <div id="btnContainer">
+                        <button id="submitBtn" type="submit" class="btn btn-primary">
+                            <span id="btnText">Send Code</span>
+                            <span id="btnLoader" class="loading loading-spinner loading-sm hidden"></span>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const form = document.getElementById("loginForm");
+        const btn = document.getElementById("submitBtn");
+        const text = document.getElementById("btnText");
+        const loader = document.getElementById("btnLoader");
+
+        // Initially disable button
+        btn.disabled = true;
+
+        // Enable submit button when reCAPTCHA is verified
+        function enableSubmit(token) {
+            btn.disabled = false;
+        }
+
+        // Disable submit button when reCAPTCHA expires
+        function disableSubmit() {
+            btn.disabled = true;
+            grecaptcha.reset();  // Reset reCAPTCHA
+        }
+
+        // Form submit handler (remove manual captcha check - callback handles it)
+        form.addEventListener("submit", (e) => {
+            btn.disabled = true;
+            text.textContent = "Processing...";
+            loader.classList.remove("hidden");
+        });
+    </script>
+</body>
+
+</html>
+
+{% endblock %}
