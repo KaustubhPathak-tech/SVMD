@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     # vercel deploy --prod
     'whitenoise.runserver_nostatic',
     # vercel deploy --prod end
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,8 +62,6 @@ INSTALLED_APPS = [
     'main',
     'tailwind',
     'theme',
-    'cloudinary',
-    'cloudinary_storage',
 ]
 
 
