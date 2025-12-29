@@ -23,6 +23,7 @@
       box-sizing: border-box;
     }
 
+ 
     .trust-intro {
       padding: clamp(18px, 4vh, 36px) 0;
       background: linear-gradient(180deg, #fff, #f9fafb);
@@ -47,8 +48,9 @@
 
     .trust-content h1 {
       margin-top: 0;
-      font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+      font-size: clamp(0.7rem, 1.7vw, 1.1rem);
       color: #1b1b1f;
+      font-weight: 600;
     }
 
     .lead {
@@ -64,7 +66,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 8px;
-      width: 48vw;
+      width: 38vw;
     }
 
     .trust-facts li {
@@ -105,6 +107,54 @@
       .container {
         padding: 40px 24px;
       }
+
+      .trust-intro{
+        width: 80vw;
+        margin: -7vh auto;
+      }
+
+      .trust-greetings{
+        width: 80vw;
+        margin: auto;
+        margin-bottom: 6vh;
+      }
+
+      .container{
+        max-width: 80vw;
+      }
+    }
+
+    /* mobile styles */
+    @media (max-width: 767px) {
+      .container {
+        padding: 6px 24px;
+      }
+
+      .trust-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .trust-facts {
+        width: 80vw;
+      }
+
+
+      .trust-greetings{
+        background: linear-gradient(180deg, #fff, #f7f9fc);
+        padding: 24px;
+        border-top: 1px solid rgba(17, 24, 39, 0.04);
+        margin-top: 18px;
+      }
+
+      .greeting-lead {
+        color: #374151;
+        padding: 0 16px;
+        margin-top: 8px;
+        line-height: 1.6;
+      }
+
     }
 
     /* Greetings section */
@@ -125,6 +175,7 @@
       color: #374151;
       margin-top: 8px;
       line-height: 1.6;
+      padding: 0 32px;
     }
 
     @media (min-width: 768px) {
@@ -142,7 +193,8 @@
     <div class="container trust-grid">
       <div class="trust-image">
         <!-- Replace the src with a local static image if you add one to your project -->
-        <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg" alt="Mandiram Temple" />
+        <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg"
+          alt="Mandiram Temple" />
       </div>
 
       <div class="trust-content">
@@ -156,22 +208,21 @@
           <li><strong>Established:</strong> 1998</li>
           <li><strong>Registration No.:</strong> REG-1998-001</li>
           <li><strong>Founder:</strong> Sri Raghavendra Pillai</li>
-          <li><strong>Mission:</strong> Preserve temple heritage &amp; uplift the local community</li>
+          <li><strong>Mission:</strong> Preserve temple heritage and uplift the local community</li>
           <li><strong>Contact:</strong> +91 98765 43210 | <a href="mailto:info@mandiram.org">info@mandiram.org</a></li>
         </ul>
 
         <div class="trust-actions">
           <a class="btn donate-btn" href="/donation-options">Donate</a>
-          <a class="btn" href="/contact-us">Contact Us</a>
+          <a class="btn donate-btn" href="/contact-us">Contact</a>
         </div>
       </div>
     </div>
   </section>
 
-
-  <section class="text-center trust-greetings container">
-    <h2>Message from the Trust</h2>
-    <p class="greeting-lead"><strong>Greetings:</strong> On behalf of the Mandiram Trust, we extend warm wishes to
+  <section class="text-justify trust-greetings container">
+    <h2 class="text-center">Message from the Trust</h2>
+    <p class="greeting-lead"><strong><span class="text-2xl">G</span>reetings </strong> On behalf of the Mandiram Trust, we extend warm wishes to
       everyone. Our motivation is to encourage spiritual harmony, compassion, and ethical living—promoting respect among
       all faiths and communities through service, education, and cultural exchange.</p>
   </section>

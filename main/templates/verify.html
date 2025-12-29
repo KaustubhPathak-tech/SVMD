@@ -1,14 +1,107 @@
 <!DOCTYPE html>
+
+{% extends "base.html" %}
+
+{% block title %}Verification - Mandiram{% endblock %}
+
+{% block content %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    {% load static %}
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+    <style>
+        .verifyBody {
+            padding: 3vh 5vw;
+
+        }
+
+        .verifyForm {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 3vw 5vh;
+        }
+
+        .email-input {
+            width: 100%;
+            height: 56px;
+            padding: 0 48px 0 20px;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-input[type="text"] {
+            letter-spacing: 0.3em;
+            /* Increase letter spacing for OTP input */
+        }
+
+        .email-input::placeholder {
+            color: rgba(107, 114, 128, 0.7);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            opacity: 1;
+        }
+
+        .email-input:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+        }
+
+        .email-input:focus {
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.2),
+                0 20px 40px rgba(59, 130, 246, 0.15);
+            transform: scale(1.02);
+        }
+
+        .email-input:active {
+            transform: scale(0.99);
+        }
+
+        .email-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(59, 130, 246, 0.6);
+            pointer-events: none;
+        }
+
+        .spacious {
+            margin-bottom: 1rem;
+        }
+
+        .alert {
+            padding: 1vw;
+            color: #b91c1c;
+            font: bold;
+            background-color: #fee2e2;
+            border-radius: 0.5rem;
+            width: 70%;
+            margin-left: 15%;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Enter Verification Code</h2>
+    <section class="intro">
+        <!-- <h2>Enter Verification Code</h2>
 
     {% if error %}
     <p style="color:red">{{ error }}</p>
@@ -18,8 +111,52 @@
         {% csrf_token %}
         <input type="text" name="code" placeholder="Enter 6 Digit Code" required>
         <button type="submit">Verify</button>
-    </form>
+    </form> -->
 
+        <div class="min-h-screen flex items-center justify-center bg-base-200 verifyBody">
+            <div class="card w-full max-w-sm shadow-xl bg-base-100">
+                <div class="card-body">
+                    <br />
+                    <h2 class="card-title justify-center text-center">Enter Verification Code</h2>
+
+                    {% if error %}
+                    <div class="alert alert-error text-sm">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" class="space-y-4 verifyForm">
+                        {% csrf_token %}
+
+                        <!-- Enhanced OTP Input -->
+                        <input type="text" name="code" placeholder="Enter 6-digit code" maxlength="6"
+                            inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}"
+                            class="input input-bordered input-primary w-full text-center tracking-widest text-lg email-input"
+                            required />
+
+                        <button type="submit" class="btn btn-primary w-full">
+                            Verify
+                        </button>
+                    </form>
+
+                    <p class="text-center text-sm opacity-70">
+                        Didn’t receive the code?
+                        <a href="{% url 'core:resend_code' %}" class="link link-primary">
+                            Resend
+                        </a>
+                    </p>
+
+                    {% if error %}
+                    <p class="alert alert-error text-center text-red-600 text-sm mt-2">{{ error }}</p>
+                    {% endif %}
+
+                    <br />
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 
 </html>
+
+{% endblock %}

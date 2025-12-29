@@ -23,24 +23,11 @@
     }
 
     /* scrolling error bug fix */
-    
+
     #warnBox {
       pointer-events: none !important;
     }
 
-    /* 🔥 NEW — smooth slideshow performance */
-    
-
-    /* 🔥 NEW */
-    
-
-    /* 🔥 CHANGED */
-    
-
-    /* 🔥 NEW */
-    
-
-    /* scroliing ended */
 
     .page-header {
       background: linear-gradient(180deg, rgba(245, 158, 11, 0.06), rgba(255, 255, 255, 0));
@@ -103,6 +90,16 @@
       max-width: 20vw;
     }
 
+    .donate-btn {
+      padding: 0.55rem 0.95rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff8800, #ff6b00);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(255, 136, 0, 0.3);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
     /* global css ended */
 
 
@@ -149,83 +146,6 @@
       }
     }
 
-    /* Position + compact size */
-    /* #google_translate_element {
-      position: fixed;
-      overflow: hidden;
-      top: 10vh;
-      left: 2vw;
-      z-index: 1000;
-      background: rgba(255, 255, 255, .95);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 4px 6px !important;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, .12), 0 2px 8px rgba(0, 0, 0, .08);
-      transform: scale(.8);
-      transform-origin: top left;
-      overflow: hidden;
-      white-space: nowrap;
-      width: 240px;
-      border: 5px solid red;
-
-    }
-
-    .VIpgJd-ZVi9od-xl07Ob-lTBxed {
-      width: 120px !important;
-    }
-
-    #google_translate_element:hover {
-      transform: scale(.9) translateY(-2px);
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.15),
-        0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .goog-te-banner-frame {
-      display: none !important;
-    }
-
-    .goog-te-gadget-simple {
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 4px;
-      padding: 2px 6px !important;
-      line-height: 1 !important;
-      white-space: nowrap !important;
-    }
-
-    .goog-te-gadget-simple br {
-      display: none !important;
-    }
-
-    .goog-te-gadget-simple .goog-te-menu-value {
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 4px;
-      line-height: 1 !important;
-      white-space: nowrap !important;
-    }
-
-    .goog-te-gadget-simple span,
-    .goog-te-gadget-simple img {
-      vertical-align: middle !important;
-      line-height: 1 !important;
-    }
-
-    @media (max-width: 600px) {
-      #google_translate_element {
-        transform: scale(.65);
-      }
-    }
-
-    @media (max-width: 768px) {
-      #google_translate_element {
-        bottom: 20px;
-        left: 20px;
-        max-width: 300px;
-      }
-    }  */
 
 
     /* ---- Compact, Single-Line Google Translate Widget ---- */
@@ -323,14 +243,185 @@
     #google_translate_element br {
       display: none !important;
     }
+
+    /* FIXED POSITION FULL-SCREEN DRAWER */
+
+    /* Mobile menu drawer styles */
+    #mobile-drawer {
+      position: fixed;
+      top: 10vh;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s,
+        visibility 0s linear .45s;
+      background: rgba(0, 0, 0, .75);
+    }
+
+    #mobile-drawer.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #mobile-menu:checked~#mobile-drawer {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .45s ease;
+    }
+
+
+    /* DRAWER MENU STYLES */
+    .drawer-menu {
+      position: fixed;
+      top: 10vh;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #fff;
+      transform: translateX(-100%);
+      transition: transform .4s cubic-bezier(.25, .46, .45, .94);
+      box-shadow: none;
+      overflow-y: auto;
+    }
+
+    #mobile-menu:checked~#mobile-drawer .drawer-menu {
+      transform: translateX(0);
+    }
+
+    .drawer-menu .menu li a {
+      font-size: 1.4rem;
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+      transition: all 0.3s ease;
+      width: 100vw;
+    }
+
+    .drawer-menu .menu li a:hover {
+      transform: translateX(0.5rem);
+      background: rgba(59, 130, 246, 0.1);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    }
+
+    .drawer-menu .menu>li>a {
+      border-bottom: 1px solid gray !important;
+    }
+
+
+    /* DEFAULT: Show only hamburger */
+    .toggle-close {
+      display: none;
+    }
+
+    #mobile-menu:checked~.navbar .toggle-open {
+      display: none;
+    }
+
+    #mobile-menu:checked~.navbar .toggle-close {
+      display: inline-block;
+    }
+
+    body.no-scroll {
+      overflow: hidden !important;
+    }
+
+    .drawer-menu::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    .drawer-menu {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+
+    /* about styele */
+    .about-submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease;
+    }
+
+    .about-submenu li a {
+      font-size: 1.3rem;
+      /* font-weight: 200; */
+      padding: 0.75rem 0;
+      border-bottom: 1px solid gray !important;
+      padding-left: 1.5rem;
+      margin-left: 0.8rem;
+      border-left: 2px solid #d1d5db;
+    }
+
+    .menu-title {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      border-bottom: 1px solid gray !important;
+      justify-content: space-between !important;
+      font-size: 1.4rem;
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+    }
+
+    .about-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .about-arrow.open {
+      transform: rotate(180deg);
+    }
   </style>
 
   {% endblock %}
 </head>
 
 <body>
-
+  <!-- HIDDEN DRAWER INPUT -->
+  <input id="mobile-menu" type="checkbox" class="hidden" />
   {% include "navbar.html" %}
+
+  <!-- FIXED OVERLAY DRAWER (sits ON TOP of content) -->
+  <div id="mobile-drawer">
+    <div class="drawer-menu">
+
+      <!-- <label for="mobile-menu" class="close-btn p-3 hover:bg-gray-100 rounded-full mx-4 mt-4">
+        <i class="fas fa-times text-gray-700 text-xl"></i>
+      </label> -->
+
+      <ul class="menu p-0">
+        <li><a href="/" class="text-xl">Home</a></li>
+
+        <li class="menu-title text-lg font-semibold py-4 mt-6 flex items-center justify-between">
+          <span>About</span>
+          <!-- Dropdown Toggle Button -->
+          <i class="fas fa-angle-down about-arrow text-xl" id="aboutToggle"></i>
+
+        </li>
+
+        <ul id="aboutMenu" class="about-submenu ml-8">
+          <li><a href="/about">About Temple</a></li>
+          <li><a href="/trust-members">Trust Members</a></li>
+        </ul>
+
+        <li><a href="/how-to-reach" class="text-xl"> SAJAWN</a></li>
+        <li><a href="/donation-options" class="text-xl"> Donation Options</a></li>
+        <li><a href="/donate" class="text-xl">Donation Receipt</a></li>
+        <li><a href="/featured-news" class="text-xl">Featured News</a></li>
+        <li><a href="/contact-us" class="text-xl">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!--end FULL-SCREEN MOBILE DRAWER -->
+
   <div id="google_translate_element" class="fixed bottom-4 left-4 z-999999">
   </div>
 
@@ -456,10 +547,12 @@
 
         // Ctrl + Shift + I / J 
         // (DevTools) — not blocked to allow debugging in development
-        if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
-          e.preventDefault();
-          warn();
-        }
+        // if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
+        //   e.preventDefault();
+        //   warn();
+        // }
+
+
         // Save Page Ctrl + S
         if (e.ctrlKey && e.key.toLowerCase() === 's') {
           e.preventDefault();
@@ -563,10 +656,57 @@
 
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+  <script>
+    document.addEventListener("change", function (e) {
+      const body = document.body;
+      const toggle = document.getElementById("mobile-menu");
+      if (toggle.checked) {
+        body.classList.add("no-scroll");
+      } else {
+        body.classList.remove("no-scroll");
+      }
+    });
+  </script>
+  <script>
+    const aboutToggle = document.getElementById("aboutToggle");
+    const aboutMenu = document.getElementById("aboutMenu");
 
-  {% include "footer.html" %}
+    aboutToggle.addEventListener("click", () => {
+      aboutMenu.style.maxHeight =
+        aboutMenu.style.maxHeight ? null : aboutMenu.scrollHeight + "px";
 
-  {% include 'scroll_to_top.html' %}
+      aboutToggle.classList.toggle("open");
+    });
+  </script>
+
+  <!-- dynamic reveal on scroll -->
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const elements = document.querySelectorAll(".reveal");
+
+      const sectionobserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove("opacity-0", "translate-y-10");
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            // Optional: stop observing after reveal
+            sectionobserver.unobserve(entry.target);
+          }
+        })
+      }, { threshold: 0.2 });
+
+      elements.forEach(el => sectionobserver.observe(el));
+
+    });
+  </script> -->
+</body>
+
+
+
+{% include "footer.html" %}
+
+{% include 'scroll_to_top.html' %}
 </body>
 
 </html>

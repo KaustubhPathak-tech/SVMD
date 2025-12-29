@@ -9,6 +9,8 @@
         .navbar {
             padding: 0.85rem 1.25rem;
             box-shadow: 0 6px 18px rgba(12, 12, 14, 0.04);
+            z-index: 10000;
+            /* Below navbar (10000) */
         }
 
         .navbar .navbar-start,
@@ -37,25 +39,14 @@
             white-space: nowrap;
         }
 
-        /* ------------------------------ */
-        /* DROPDOWN FIX SECTION           */
-        /* ------------------------------ */
 
-        /* ❌ REMOVE THIS — was breaking dropdown
-.menu, .dropdown-content {
-    white-space: normal;
-}
-*/
 
         /* ✅ Allow DaisyUI dropdown to work normally */
-        .dropdown-content {
+        /* .dropdown-content {
             min-width: 14rem;
-
-
             box-sizing: border-box;
 
             white-space: nowrap;
-
             z-index: 50;
         }
 
@@ -66,171 +57,43 @@
         .dropdown-content li a {
             display: block;
             padding: 0.5rem 0.8rem;
-        }
+        } */
 
+        /* Navbar buttons */
         .navbar .btn,
         .navbar .btn.donate-btn {
             padding: 0.55rem 0.95rem;
             font-weight: 700;
-            background: #ff8800;
+            background: linear-gradient(135deg, #ff8800, #ff6b00);
             color: #fff;
-            box-shadow: 0 6px 18px rgba(255, 95, 176, 0.08);
+            box-shadow: 0 6px 18px rgba(255, 136, 0, 0.3);
+            border-radius: 2px;
+            transition: all 0.3s ease;
         }
 
-        /* Optional responsive tuning — still safe to use if needed
-        @media (min-width: 1024px) {
-            .navbar {
-                padding: 1rem 3rem;
-            }
+        .navbar .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 136, 0, 0.4);
+        }
 
-            .navbar .navbar-start,
-            .navbar .navbar-end {
-                gap: 1.8rem;
-            }
-
-            .menu.menu-horizontal {
-                gap: 1.6rem;
-            }
-
-            .dropdown-content {
-                min-width: 16rem;
+        @media (max-width: 1024px) {
+            .navbar-end {
+                margin-left: auto;
             }
         }
-        */
     </style>
-    <!-- <style>
-        /* Local navbar spacing & alignment tweaks */
-        .navbar {
-            padding: 0.85rem 1.25rem;
-            box-shadow: 0 6px 18px rgba(12, 12, 14, 0.04);
-        }
-
-        /* Make the left and right groups more spacious */
-        .navbar .navbar-start,
-        .navbar .navbar-end {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-        }
-
-        .navbar-start {
-            width: auto;
-            padding: 1vh;
-            padding-right: 3vw;
-        }
-
-        /* .navbar-center{
-            border: 1px solid black;
-        } */
-
-        /* Horizontal menu spacing */
-        .menu.menu-horizontal {
-            display: flex;
-            gap: 1.25rem;
-            align-items: center;
-        }
-
-        .menu.menu-horizontal a {
-            padding: 0.5rem 0.75rem;
-            border-radius: 8px;
-            font-weight: 600;
-            white-space: nowrap;
-            /* keep items on one line */
-        }
-
-        /* Dropdown / list width fixes - prevent wrapping and overlapping */
-        .menu,
-        .dropdown-content {
-            white-space: normal;
-        }
-
-        .dropdown-content,
-        .menu .dropdown-content {
-            min-width: 14rem;
-            /* ~224px */
-            width: auto !important;
-            box-sizing: border-box;
-            white-space: nowrap;
-            /* prevent nested items wrapping */
-        }
-
-        /* Make mobile dropdowns slightly wider for tappable area */
-        .menu.menu-sm.dropdown-content {
-            min-width: 18rem;
-        }
-
-        .dropdown-content .menu,
-        .dropdown .dropdown-content {
-            min-width: 14rem;
-        }
-
-        /* Ensure each link occupies full width in dropdowns */
-        .dropdown-content li a {
-            display: block;
-            padding: 0.5rem 0.8rem;
-        }
-
-        /* Make CTA buttons bolder and spacious */
-        .navbar .btn,
-        .navbar .btn.donate-btn {
-            padding: 0.55rem 0.95rem;
-            font-weight: 700;
-            background: #ff8800;
-            color: #fff;
-            box-shadow: 0 6px 18px rgba(255, 95, 176, 0.08);
-        }
-
-        /* Slightly more breathing room on larger screens */
-        /* @media (min-width: 1024px) {
-            .navbar {
-                padding: 1rem 3rem;
-            }
-
-            .navbar .navbar-start,
-            .navbar .navbar-end {
-                gap: 1.8rem;
-            }
-
-            .menu.menu-horizontal {
-                gap: 1.6rem;
-            }
-
-            .dropdown-content {
-                min-width: 16rem;
-            }
-        } */
-    </style> -->
 </head>
 
 <body>
-    <div class="navbar bg-base-100 shadow-sm">
+    <!-- navbar.html - ONLY mobile toggle + your existing navbar content -->
+    <div class="navbar bg-base-100 shadow-xl">
         <div class="navbar-start">
-            <div class="dropdown dropdown-hover">
-                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h8m-8 6h16" />
-                    </svg>
-                </div>
-                <ul tabindex="-1"
-                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                    <li><a href="/">Home</a></li>
-                    <li class="dropdown">
-                        <a tabindex="0" role="button" class="m-1 menu-dropdown-toggle" href="/about">About</a>
-                        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-40 shadow">
-                            <li><a href="/about">About Temple</a></li>
-                            <li><a href="/trust-members">Trust Members</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/how-to-reach">SAJAWN</a></li>
-                    <li><a href="/donation-options">Donation Options</a></li>
-                    <li><a href="https://www.online.mandiram.co.in/">Donation Receipt</a></li>
-                    <li><a href="/featured-news">Featured News</a></li>
-                    <li><a href="/contact-us">Contact</a></li>
-                </ul>
-            </div>
-            <a class="btn btn-ghost text-xl">Mandiram</a>
+            <label for="mobile-menu" class="btn btn-ghost lg:hidden p-2">
+                <i class="fas fa-bars text-gray-700 toggle-open"></i>
+                <i class="fas fa-times text-gray-700 toggle-close"></i>
+            </label>
+
+            <a class="btn btn-ghost text-xl hidden lg:flex ml-4">Mandiram</a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
@@ -250,7 +113,7 @@
             </ul>
         </div>
         <div class="navbar-end">
-            <a class="btn">Donate</a>
+            <a class="btn" href="/donation-options">Donate</a>
 
             <!-- <a class="btn" href="{% url 'core:logout' %}">Logout</a> -->
 
@@ -266,6 +129,41 @@
             {% endif %}
         </div>
     </div>
+
+    <!-- Drawer Input Toggle (connects navbar toggle to drawer) -->
+
+    <!-- <div class="navbar bg-base-100 shadow-sm">
+
+        
+    </div> -->
+    <!-- <div class="navbar-start">
+        <div class="dropdown dropdown-hover">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h8m-8 6h16" />
+                </svg>
+            </div>
+            <ul tabindex="-1"
+                class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a tabindex="0" role="button" class="m-1 menu-dropdown-toggle" href="/about">About</a>
+                    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box w-40 shadow">
+                        <li><a href="/about">About Temple</a></li>
+                        <li><a href="/trust-members">Trust Members</a></li>
+                    </ul>
+                </li>
+                <li><a href="/how-to-reach">SAJAWN</a></li>
+                <li><a href="/donation-options">Donation Options</a></li>
+                <li><a href="/donate">Donation Receipt</a></li>
+                <li><a href="/featured-news">Featured News</a></li>
+                <li><a href="/contact-us">Contact</a></li>
+            </ul>
+        </div>
+        <a class="btn btn-ghost text-xl hidden lg:flex">Mandiram</a>
+    </div> -->
 </body>
 
 </html>

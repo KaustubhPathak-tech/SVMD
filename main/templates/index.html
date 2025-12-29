@@ -44,7 +44,7 @@
 
         .slideshow-box {
             position: relative;
-            width: 70vw;
+            width: auto;
             height: 65vh;
             margin: auto;
             overflow: hidden;
@@ -112,31 +112,22 @@
 
         .timing-section {
             display: flex;
-            /* NEW */
             justify-content: center;
-            /* NEW */
             padding: 40px 0;
-            /* IMPROVED spacing */
         }
 
         /* Beautiful centered box */
         .timing-box {
             width: 71vw;
-            /* max-width: 900px; */
-            /* NEW */
             background: #f59e0b;
-            /* same amber feel */
             color: white;
             border-radius: 14px;
             padding: 32px 28px;
-            /* ✅ MAIN FIX: internal spacing */
             text-align: center;
             display: flex;
-            /* NEW */
             flex-direction: column;
-            /* NEW */
             gap: 14px;
-            /* ✅ clean spacing between lines */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
         /* Better text styling */
@@ -659,6 +650,10 @@
                 top: 8px;
                 right: 8px;
             }
+
+            .timing-box {
+                width: 87vw;
+            }
         }
     </style>
 </head>
@@ -668,7 +663,8 @@
     <!-- <h2>Welcome {{ request.user.email }}</h2>
     <p>You are logged in.</p> -->
     <!-- Section 1 -->
-    <section id="Notices" class="w-100% px-4 py-8">
+    <section id="Notices"
+        class="w-100% px-4 py-8">
         <h2 class="font-bold text-2xl text-orange-600">Latest Notifications</h2>
         <div class="slideshow-box px-0.5 py-2 mt-4 rounded-lg shadow-lg bg-white">
             <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg" class="slide">
@@ -678,7 +674,7 @@
             <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg" class="slide">
         </div>
     </section>
-
+    
     <!-- Section 2 -->
     <!-- <section class="px-4 py-4 border flex justify-center" id="timing">
     <div class="w-[70vw] bg-amber-300 text-white rounded-lg">
@@ -712,7 +708,8 @@
 
 
     <!-- Section 3 -->
-    <section class="donation-section" id="donation">
+    <section class="donation-section"
+        id="donation">
         <div class="donation-inner">
 
             <!-- LEFT IMAGE -->
@@ -735,7 +732,7 @@
 
                 <p>A valid 80G receipt will be issued for all online donations.</p>
 
-                <button type="button" class="donate-button">Donate Now</button>
+                <button type="button" href="/donation-options" class="donate-button">Donate Now</button>
 
             </div>
 
@@ -744,7 +741,8 @@
     </section>
 
     <!-- Section 4: Trust members -->
-    <section class="carousel-section" id="card-carousel">
+    <section class="carousel-section"
+        id="card-carousel">
         <div class="carousel-inner">
             <div class="carousel-track" id="carousel-track">
 
@@ -806,7 +804,8 @@
     </section>
 
     <!-- Section 5: Photo Gallery (Collage) -->
-    <section class="gallery-section" id="gallery">
+    <section class="gallery-section"
+        id="gallery">
         <div class="gallery-inner">
             <h2 style="text-align:center; margin-bottom:18px; font-size:1.6rem; color:#111827;">Photo Gallery</h2>
             <div class="gallery-grid">
@@ -876,7 +875,6 @@
             <button class="media-nav media-next" id="media-next" aria-label="Next">&#10095;</button>
         </div>
     </div>
-
 
     <script>
         (function () {
@@ -1032,6 +1030,9 @@
 
         })();
     </script>
+
+   
+
 </body>
 
 </html>

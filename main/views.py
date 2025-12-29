@@ -3,6 +3,8 @@ from django.contrib.auth import logout
 from django.http import HttpResponse
 import requests
 from .models import Profile
+from django.utils import timezone
+from datetime import timedelta
 from django.contrib import messages
 from django.conf import settings
 import random
@@ -69,8 +71,6 @@ def login_request(request):
 
     return render(request, "login.html")
 
-
-
 def verify_code(request):
     email = request.session.get("email")
 
@@ -97,6 +97,44 @@ def verify_code(request):
             return render(request, "verify.html", {"error": "Invalid or expired code"})
 
     return render(request, "verify.html")
+
+
+# code for review
+def resend_code(request):
+    email = request.session.get("email")
+
+    if not email:
+        messages.error(request, "Session expired. Please login again.")
+        return redirect("login")
+
+    # ---------- RATE LIMIT / COOLDOWN (60 seconds) ----------
+    last_sent = request.session.get("last_code_time")
+    if last_sent:
+        last_time = timezone.datetime.fromtimestamp(last_sent, tz=timezone.utc)
+        if timezone.now() - last_time < timedelta(seconds=60):
+            messages.error(request, "Please wait before requesting another code.")
+            return redirect("core:verify_code")
+
+    # ---------- INVALIDATE OLD UNUSED TOKENS (SECURITY) ----------
+    EmailLoginToken.objects.filter(email=email, is_used=False).update(is_used=True)
+
+    # ---------- GENERATE NEW CODE ----------
+    code = generate_code()
+
+    EmailLoginToken.objects.create(email=email, code=code)
+
+    send_mail(
+        subject="Your Login Code",
+        message=f"Your login code is: {code}",
+        from_email="your_email@gmail.com",
+        recipient_list=[email],
+    )
+
+    # ---------- UPDATE RATE LIMIT TIME ----------
+    request.session["last_code_time"] = timezone.now().timestamp()
+
+    messages.success(request, "A new verification code has been sent.")
+    return redirect("core:verify_code")
 
 
 @login_required
