@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     'main',
     'tailwind',
     'theme',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 
@@ -184,6 +186,16 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "kaustubhpathak9@gmail.com"
 EMAIL_HOST_PASSWORD = "fizz gldy pgyo fcqq"
 DEFAULT_FROM_EMAIL = 'kaustubhpathak9@gmail.com'
+
+
+# Cloudinary settings
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": 'dchlu4kif',
+    "API_KEY":'216348816151951',
+    "API_SECRET": 'F3L_-120ej1iAXIJddKAv4t7c0w',
+}
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

@@ -22,14 +22,9 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
-
-# @receiver(post_save, sender=User)
-# def create_or_update_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#     else:
-#         if hasattr(instance, 'profile'):
-#             instance.profile.save()
+# class Photo(models.Model):
+#     title = models.CharField(max_length=50)
+#     image = models.ImageField(upload_to="photos/")
+    
+#     def __str__(self):
+#         return self.title
