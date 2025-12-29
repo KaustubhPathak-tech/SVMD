@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+#postgresdb setup
+import os
+import dj_database_url
+
+#postgresdb setup end
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +37,10 @@ SECRET_KEY = 'django-insecure-#-dhudma9ui3d0r)(37)7f*v9jq9@et^p-o500z%v+wtkb)zvy
 
 DEBUG = False
 ALLOWED_HOSTS = ['svmd.vercel.app', '*']
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app",
+    "https://*.org"
+]
 
 # vercel deploy --prod end
 
@@ -98,12 +107,22 @@ WSGI_APPLICATION = 'SVMD.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+#postgresdb setup
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(
+        default="postgresql://neondb_owner:npg_pNt7mYO6TbeD@ep-restless-moon-a1yd36e7-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
+#postgresdb setup end
 
 
 # Password validation
