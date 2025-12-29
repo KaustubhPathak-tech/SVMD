@@ -21,8 +21,13 @@
 
             <!-- Avatar -->
             <figure class="px-8 pt-8">
+                {% if user.profile.avatar %}
                 <img src="{{ user.profile.avatar.url }}" alt="Profile Image"
                     class="rounded-xl w-40 h-40 object-cover shadow-lg">
+                {% else %}
+                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995285/user-avatar_hxmpbp.png" alt="Profile Image"
+                    class="rounded-xl w-40 h-40 object-cover shadow-lg">
+                {% endif %}
             </figure>
 
             <!-- Details -->
