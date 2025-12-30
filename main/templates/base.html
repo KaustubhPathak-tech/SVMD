@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
   <title>{% block title %}Site{% endblock %}</title>
   {% load static %}
   <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
@@ -144,6 +145,11 @@
       .page-header {
         padding: clamp(12px, 3vh, 20px) 0;
       }
+
+      .btn {
+      padding: 4px 8px;
+      max-width: 40vw;
+    }
     }
 
 
@@ -251,7 +257,7 @@
       position: fixed;
       top: 8vh;
       left: 0;
-      width: 100vw;
+      width: 99vw;
       height: 100vh;
       z-index: 9999;
       opacity: 0;
@@ -278,12 +284,13 @@
       position: fixed;
       top: 8vh;
       left: 0;
-      width: 100vw;
+      width: 99vw;
       height: 100vh;
       background: #fff;
       transform: translateX(-100%);
       transition: transform .4s cubic-bezier(.25, .46, .45, .94);
       box-shadow: none;
+      overflow: hidden;
       overflow-y: auto;
     }
 
@@ -296,9 +303,9 @@
       color: #e59f2f;
       font-weight: 600;
       border-radius: 0;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1rem;
       transition: all 0.3s ease;
-      width: 96vw;
+      width: 97.5vw;
     }
 
     .drawer-menu .menu li a:hover {
@@ -348,8 +355,8 @@
     }
 
     .about-submenu li a {
-      font-size: 24px;
-      font-weight: 200;
+      font-size: 0.6rem;
+      font-weight: 400;
       padding: 0.75rem 0;
       border-bottom: 1px solid gray !important;
       padding-left: 1.5rem;
@@ -366,7 +373,7 @@
       font-size: 1.4rem;
       color: #e59f2f;
       font-weight: 600;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1rem;
     }
 
     .about-arrow {
@@ -388,7 +395,7 @@
 
 <body>
   <!-- HIDDEN DRAWER INPUT -->
-  <input id="mobile-menu" type="checkbox" class="hidden" />
+  <input id="mobile-menu" type="checkbox" title="navbar" class="hidden" />
   {% include "navbar.html" %}
 
   <!-- FIXED OVERLAY DRAWER (sits ON TOP of content) -->

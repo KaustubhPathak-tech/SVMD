@@ -3,14 +3,14 @@ from django.contrib.auth import logout
 from django.http import HttpResponse
 import requests
 from .models import Profile
-from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
 from django.conf import settings
 import random
 import string
-from datetime import timedelta
+from datetime import timedelta, timezone as dt_timezone
 from django.utils import timezone
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login
@@ -42,7 +42,7 @@ def login_view(request):
             # Send login code logic here
             # send_login_code(email)  # Your email function
             messages.success(request, f"Login code sent to {email}.")
-            request.session['temp_email'] = email  # Store for next step
+            request.session["email"] = email  # Store for next step
             return redirect("verify_code")  # Next view for code verification
         else:
             messages.error(request, "Email is required.")
@@ -62,7 +62,7 @@ def login_request(request):
         send_mail(
             subject="Your Login Code",
             message=f"Your login code is: {code}",
-            from_email="your_email@gmail.com",
+            from_email="kaustubhpathak9@gmail.com",
             recipient_list=[email],
         )
 
@@ -73,6 +73,17 @@ def login_request(request):
 
 def verify_code(request):
     email = request.session.get("email")
+     # ---------- COOLDOWN REMAINING ----------
+    cooldown_remaining = 0
+    last_sent = request.session.get("last_code_time")
+
+    if last_sent:
+        # use datetime.timezone.utc (aliased as dt_timezone)
+        last_time = timezone.datetime.fromtimestamp(last_sent, tz=dt_timezone.utc)
+        diff = timezone.now() - last_time
+        remaining = 60 - diff.total_seconds()
+        if remaining > 0:
+            cooldown_remaining = int(remaining)
 
     if request.method == "POST":
         code_entered = request.POST.get("code")
@@ -96,8 +107,10 @@ def verify_code(request):
         except EmailLoginToken.DoesNotExist:
             return render(request, "verify.html", {"error": "Invalid or expired code"})
 
-    return render(request, "verify.html")
-
+    return render(request, "verify.html", {
+        "error": None,
+        "cooldown_remaining": cooldown_remaining
+    })
 
 # code for review
 def resend_code(request):
@@ -110,7 +123,7 @@ def resend_code(request):
     # ---------- RATE LIMIT / COOLDOWN (60 seconds) ----------
     last_sent = request.session.get("last_code_time")
     if last_sent:
-        last_time = timezone.datetime.fromtimestamp(last_sent, tz=timezone.utc)
+        last_time = timezone.datetime.fromtimestamp(last_sent, tz=dt_timezone.utc)
         if timezone.now() - last_time < timedelta(seconds=60):
             messages.error(request, "Please wait before requesting another code.")
             return redirect("core:verify_code")
@@ -126,7 +139,7 @@ def resend_code(request):
     send_mail(
         subject="Your Login Code",
         message=f"Your login code is: {code}",
-        from_email="your_email@gmail.com",
+        from_email="kaustubhpathak9@gmail.com",
         recipient_list=[email],
     )
 
@@ -173,6 +186,7 @@ def edit_profile(request):
 
 def user_logout(request):
     logout(request)
+    list(messages.get_messages(request))
     return redirect("core:home")
 
 

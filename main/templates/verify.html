@@ -101,23 +101,30 @@
 
 <body>
     <section class="intro">
-        <!-- <h2>Enter Verification Code</h2>
-
-    {% if error %}
-    <p style="color:red">{{ error }}</p>
-    {% endif %}
-
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="code" placeholder="Enter 6 Digit Code" required>
-        <button type="submit">Verify</button>
-    </form> -->
-
         <div class="min-h-screen flex items-center justify-center bg-base-200 verifyBody">
             <div class="card w-full max-w-sm shadow-xl bg-base-100">
                 <div class="card-body">
                     <br />
                     <h2 class="card-title justify-center text-center">Enter Verification Code</h2>
+                    {% if messages %}
+                    <div class="space-y-2 mb-2">
+                        {% for message in messages %}
+                        {% if message.tags == "success" %}
+                        <div class="alert alert-success">
+                            <span>{{ message }}</span>
+                        </div>
+                        {% elif message.tags == "error" or message.tags == "danger" %}
+                        <div class="alert alert-error">
+                            <span>{{ message }}</span>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info">
+                            <span>{{ message }}</span>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
 
                     {% if error %}
                     <div class="alert alert-error text-sm">
@@ -140,12 +147,21 @@
                     </form>
 
                     <p class="text-center text-sm opacity-70">
-                        Didn’t receive the code?
-                        <a href="{% url 'core:resend_code' %}" class="link link-primary">
+                        Didn’t received the code?
+
+                        {% if cooldown_remaining > 0 %}
+                        <span id="resendTimer" class="text-primary font-semibold">
+                            Resend in {{ cooldown_remaining }}s
+                        </span>
+                        <a class="link link-primary pointer-events-none opacity-40">
                             Resend
                         </a>
+                        {% else %}
+                        <a id="resendLink" href="{% url 'core:resend_code' %}" class="link link-primary">
+                            Resend
+                        </a>
+                        {% endif %}
                     </p>
-
                     {% if error %}
                     <p class="alert alert-error text-center text-red-600 text-sm mt-2">{{ error }}</p>
                     {% endif %}
@@ -155,6 +171,32 @@
             </div>
         </div>
     </section>
+
+    <script>
+        let timeLeft = parseInt('{{ cooldown_remaining|default:"0" }}', 10) || 0;
+        if (timeLeft > 0) {
+            const timerEl = document.getElementById("resendTimer");
+
+            const interval = setInterval(() => {
+                timeLeft--;
+
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    timerEl.textContent = "You can resend now";
+
+                    // enable link dynamically
+                    const link = document.createElement("a");
+                    link.href = "{% url 'core:resend_code' %}";
+                    link.className = "link link-primary";
+                    link.textContent = "Resend";
+
+                    timerEl.replaceWith(link);
+                } else {
+                    timerEl.textContent = `Resend in ${timeLeft}s`;
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 
 </html>
