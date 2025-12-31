@@ -5,6 +5,7 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,11 +76,13 @@
         .spacious {
             margin-bottom: 1rem;
         }
-        #btnContainer{
+
+        #btnContainer {
             display: flex;
             flex-direction: row;
             justify-content: center;
         }
+
         #submitBtn {
             padding: 6px;
         }
@@ -128,10 +131,10 @@
 
                     <!-- reCAPTCHA -->
                     <div class="flex justify-center">
-                        <div class="g-recaptcha" data-sitekey="6Lci_zksAAAAAOKezIFj2IVlnViBMIylDSzd6pZy"
-                            data-callback="enableSubmit" data-expired-callback="disableSubmit"></div>
+                        <div class="g-recaptcha" data-sitekey={{recaptcha_site_key}} data-callback="enableSubmit"
+                            data-expired-callback="disableSubmit"></div>
                     </div>
-                    <br/>
+                    <br />
                     <div id="btnContainer">
                         <button id="submitBtn" type="submit" class="btn btn-primary">
                             <span id="btnText">Send Code</span>

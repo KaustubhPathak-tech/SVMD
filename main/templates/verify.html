@@ -96,6 +96,18 @@
             width: 70%;
             margin-left: 15%;
         }
+
+        #btnContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (max-width:767px){
+            #verifyBtn{
+                width: 80vw;
+            }
+        }
     </style>
 </head>
 
@@ -140,10 +152,12 @@
                             inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}"
                             class="input input-bordered input-primary w-full text-center tracking-widest text-lg email-input"
                             required />
-
-                        <button type="submit" class="btn btn-primary w-full">
-                            Verify
-                        </button>
+                        <div id="btnContainer">
+                            <button id="verifyBtn" type="submit" class="btn btn-primary">
+                                <span id="verifyText">Verify</span>
+                                <span id="verifyLoader" class="loading loading-spinner loading-sm hidden"></span>
+                            </button>
+                        </div>
                     </form>
 
                     <p class="text-center text-sm opacity-70">
@@ -197,6 +211,20 @@
             }, 1000);
         }
     </script>
+
+    <script>
+        const verifyForm = document.querySelector(".verifyForm");
+        const verifyBtn = document.getElementById("verifyBtn");
+        const verifyText = document.getElementById("verifyText");
+        const verifyLoader = document.getElementById("verifyLoader");
+
+        verifyForm.addEventListener("submit", () => {
+            verifyBtn.disabled = true;
+            verifyText.textContent = "Verifying...";
+            verifyLoader.classList.remove("hidden");
+        });
+    </script>
+
 </body>
 
 </html>

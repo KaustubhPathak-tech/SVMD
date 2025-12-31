@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
+    <!-- <style>
         .input,
         .textarea,
         textarea,
@@ -22,7 +22,116 @@
         .editForm {
             padding: 3vh 2vw;
         }
+    </style> -->
+    <style>
+        /* ---------- Base Styling ---------- */
+        .editForm {
+            padding: 2rem 1.2rem;
+        }
+
+        .input,
+        .textarea,
+        textarea,
+        select {
+            border: 1px solid #d1d5db !important;
+            padding: 10px 8px;
+            width: 100%;
+        }
+
+        /* ---------- Card ---------- */
+        .editForm.card {
+            border-radius: 14px;
+        }
+
+        /* ---------- Labels ---------- */
+        .form-control .label-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* ---------- Mobile First ---------- */
+        @media (max-width: 640px) {
+            .editForm {
+                padding: 2.5rem 1rem;
+                max-width: 90vw;
+            }
+
+            .card-body {
+                padding: 1.2rem;
+            }
+
+            .card-title {
+                font-size: 1.4rem;
+            }
+
+            .input,
+            textarea,
+            select {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            /* Buttons layout better on small screens */
+            .profile-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .avatar-wrapper {
+                width: 100%;
+                overflow: hidden;
+            }
+
+            /* Control the file input itself */
+            .avatar-wrapper input[type="file"] {
+                width: 100%;
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Optional – nicer button look if needed */
+            .avatar-wrapper input[type="file"]::file-selector-button {
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
+
+        }
+
+        /* ---------- Tablets ---------- */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .editForm {
+                padding: 3rem 2rem;
+            }
+
+            .card-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* ---------- Laptop & Desktop ---------- */
+        @media (min-width: 1025px) {
+            .editForm {
+                padding: 3rem 3rem;
+            }
+
+            .card-body {
+                padding: 2rem;
+            }
+
+            .card-title {
+                font-size: 1.8rem;
+            }
+
+            .input,
+            textarea,
+            select {
+                font-size: 1rem;
+            }
+        }
     </style>
+
 </head>
 
 <body>
@@ -32,16 +141,8 @@
             <div class="card-body">
                 <h2 class="card-title text-2xl">Edit Profile</h2>
                 <div class="divider"></div>
-                <button id="editToggleBtn" type="button"
-                    class="btn btn-sm btn-outline btn-primary flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                            d="M15.232 5.232l3.536 3.536M4 20h4l10.607-10.607a1 1 0 000-1.414l-2.586-2.586a1 1 0 00-1.414 0L4 16v4z" />
-                    </svg>
-                    Edit
-                </button>
-                <form method="POST" enctype="multipart/form-data" class="space-y-4">
+
+                <form method="POST" enctype="multipart/form-data" class="space-y-4 updateProfile">
                     {% csrf_token %}
 
                     <!-- First Name -->
@@ -108,9 +209,11 @@
                     <br />
                     <br />
                     <!-- Avatar -->
-                    <label class="form-control w-full">
+                    <label class="form-control" id="avatar">
                         <span class="label-text">Avatar</span>
-                        {{ p_form.avatar }}
+                        <div class="avatar-wrapper">
+                            {{ p_form.avatar }}
+                        </div>
                     </label>
                     <br />
                     <br />
@@ -120,8 +223,9 @@
                             Cancel
                         </a>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary">
-                            Update Profile
+                        <button id="updateBtn" type="submit" class="btn btn-primary">
+                            <span id="updateText">Update Profile</span>
+                            <span id="updateLoader" class="loading loading-spinner loading-sm hidden"></span>
                         </button>
                     </div>
 
@@ -131,27 +235,17 @@
         </div>
     </section>
     <br />
+
     <script>
-        // 🔥 Toggle Edit Mode (NEW)
-        const toggleBtn = document.getElementById("editToggleBtn");
-        const form = document.querySelector(".editForm form");
+        const updateForm = document.querySelector(".updateProfile");
+        const updateBtn = document.getElementById("updateBtn");
+        const updateText = document.getElementById("updateText");
+        const updateLoader = document.getElementById("updateLoader");
 
-        // Get all editable fields
-        const fields = form.querySelectorAll("input, textarea, select");
-
-        // Initially disable everything
-        fields.forEach(f => f.disabled = true);
-
-        let isEditing = false;
-
-        toggleBtn.addEventListener("click", () => {
-            isEditing = !isEditing;
-
-            fields.forEach(f => f.disabled = !isEditing);
-
-            toggleBtn.innerHTML = isEditing
-                ? `Enter details now`
-                : `Edit`;
+        updateForm.addEventListener("submit", () => {
+            updateBtn.disabled = true;
+            updateText.textContent = "Updating...";
+            updateLoader.classList.remove("hidden");
         });
     </script>
 

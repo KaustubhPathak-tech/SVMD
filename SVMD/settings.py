@@ -13,8 +13,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 #postgresdb setup
 import os
+from dotenv import load_dotenv
 import dj_database_url
 
+
+load_dotenv()
 #postgresdb setup end
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#-dhudma9ui3d0r)(37)7f*v9jq9@et^p-o500z%v+wtkb)zvy'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -35,7 +38,7 @@ SECRET_KEY = 'django-insecure-#-dhudma9ui3d0r)(37)7f*v9jq9@et^p-o500z%v+wtkb)zvy
 
 # vercel deploy --prod
 
-DEBUG = False
+DEBUG = os.environ.get('DEBUG')==True
 ALLOWED_HOSTS = ['svmd.vercel.app', '*']
 CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
@@ -65,8 +68,8 @@ INSTALLED_APPS = [
 ]
 
 
-RECAPTCHA_PUBLIC_KEY  = "6Lci_zksAAAAAOKezIFj2IVlnViBMIylDSzd6pZy"
-RECAPTCHA_PRIVATE_KEY = "6Lci_zksAAAAAK9S5p8d1NsRhqIO1APRD6575ds9"
+RECAPTCHA_PUBLIC_KEY  = os.environ.get('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
 
 # SILENCED_SYSTEM_CHECKS = ["main.recaptcha_test_key_error"]
 
@@ -119,7 +122,7 @@ WSGI_APPLICATION = 'SVMD.wsgi.application'
 #postgresdb setup
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgresql://neondb_owner:npg_pNt7mYO6TbeD@ep-restless-moon-a1yd36e7-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+        default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True,
     )
@@ -184,15 +187,15 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "kaustubhpathak9@gmail.com"
-EMAIL_HOST_PASSWORD = "fizz gldy pgyo fcqq"
+EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'kaustubhpathak9@gmail.com'
 
 
 # Cloudinary settings
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": 'dchlu4kif',
-    "API_KEY":'216348816151951',
-    "API_SECRET": 'F3L_-120ej1iAXIJddKAv4t7c0w',
+    "CLOUD_NAME": os.environ.get('CLOUD_NAME'),
+    "API_KEY":os.environ.get('API_KEY'),
+    "API_SECRET": os.environ.get('API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

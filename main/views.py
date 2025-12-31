@@ -65,11 +65,11 @@ def login_request(request):
             from_email="kaustubhpathak9@gmail.com",
             recipient_list=[email],
         )
-
         request.session["email"] = email
         return redirect("core:verify_code")
 
-    return render(request, "login.html")
+    return render(request, "login.html",{
+        "recaptcha_site_key": settings.RECAPTCHA_PUBLIC_KEY})
 
 def verify_code(request):
     email = request.session.get("email")
