@@ -12,3 +12,4 @@ django-recaptcha==4.1.0
 django-tailwind==4.4.2
 cloudinary==1.44.1
 django-cloudinary-storage
+python-dotenv
