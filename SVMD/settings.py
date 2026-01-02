@@ -37,8 +37,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # vercel deploy --prod
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-DEBUG = os.environ.get('DEBUG')==True
+# DEBUG = os.environ.get('DEBUG')==True
 ALLOWED_HOSTS = ['svmd.vercel.app', '*']
 CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
@@ -90,21 +91,68 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'SVMD.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
+
+#for templates
+
+
+if DEBUG:
+    TEMPLATES = [
+        {
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "DIRS": [],
+            "APP_DIRS": True,
+            "OPTIONS": {
+                "context_processors": [
+                    "django.template.context_processors.debug",
+                    "django.template.context_processors.request",
+                    "django.contrib.auth.context_processors.auth",
+                    "django.contrib.messages.context_processors.messages",
+                ],
+            },
         },
-    },
-]
+    ]
+else:
+    TEMPLATES = [
+        {
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "DIRS": [BASE_DIR /"main"/ "templates"],
+            "APP_DIRS": False,
+            "OPTIONS": {
+                "context_processors": [
+                    "django.template.context_processors.debug",
+                    "django.template.context_processors.request",
+                    "django.contrib.auth.context_processors.auth",
+                    "django.contrib.messages.context_processors.messages",
+                ],
+                "loaders": [
+                    (
+                        "django.template.loaders.cached.Loader",
+                        [
+                            "django.template.loaders.filesystem.Loader",
+                            "django.template.loaders.app_directories.Loader",
+                        ],
+                    )
+                ],
+            },
+        },
+    ]
+
+
 
 WSGI_APPLICATION = 'SVMD.wsgi.application'
 
@@ -202,3 +250,8 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+LOGIN_URL = "core:login"
+LOGIN_REDIRECT_URL = "core:home"
+LOGOUT_REDIRECT_URL = "core:home"

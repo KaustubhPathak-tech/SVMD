@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
-
-{% block title %}Home - Mandiram{% endblock %}
+{% load static %}
+{% block title %}Home - Gayatri Dham Deoria{% endblock %}
 
 {% block content %}
 
@@ -10,9 +10,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Mandiram Trust</title>
-    {% load static %}
-    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -659,23 +656,24 @@
 </head>
 
 <body>
-
-    <!-- <h2>Welcome {{ request.user.email }}</h2>
-    <p>You are logged in.</p> -->
     <!-- Section 1 -->
-    <section id="Notices"
-        class="w-100% px-4 py-8">
+    <section id="Notices" class="w-100% px-4 py-8">
         <h2 class="font-bold text-2xl text-orange-600">Latest Notifications</h2>
         <div class="slideshow-box px-0.5 py-2 mt-4 rounded-lg shadow-lg bg-white">
-            <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg" class="slide">
-            <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg" class="slide">
-            <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg" class="slide">
-            <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg" class="slide">
-            <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg" class="slide">
+            <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                class="slide">
+            <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg"
+                class="slide">
+            <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg"
+                class="slide">
+            <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg"
+                class="slide">
+            <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg"
+                class="slide">
         </div>
-        
+
     </section>
-    
+
     <!-- Section 2 -->
     <!-- <section class="px-4 py-4 border flex justify-center" id="timing">
     <div class="w-[70vw] bg-amber-300 text-white rounded-lg">
@@ -709,13 +707,13 @@
 
 
     <!-- Section 3 -->
-    <section class="donation-section"
-        id="donation">
+    <section class="donation-section" id="donation">
         <div class="donation-inner">
 
             <!-- LEFT IMAGE -->
             <div class="donation-image">
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg" alt="Temple">
+                <img loading="lazy"
+                    src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg" alt="Temple">
                 <div class="overlay"></div>
             </div>
 
@@ -742,13 +740,13 @@
     </section>
 
     <!-- Section 4: Trust members -->
-    <section class="carousel-section"
-        id="card-carousel">
+    <section class="carousel-section" id="card-carousel">
         <div class="carousel-inner">
             <div class="carousel-track" id="carousel-track">
 
                 <article class="card">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg" alt="Event 1">
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                        alt="Event 1">
                     <div class="card-body">
                         <h3>Festival Celebration</h3>
                         <p>Join us for the annual festival with cultural programs and special pujas.</p>
@@ -756,7 +754,8 @@
                 </article>
 
                 <article class="card">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg" alt="Event 2">
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg"
+                        alt="Event 2">
                     <div class="card-body">
                         <h3>Community Service</h3>
                         <p>Highlights of our recent outreach and welfare activities.</p>
@@ -764,7 +763,8 @@
                 </article>
 
                 <article class="card">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg" alt="Event 3">
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg"
+                        alt="Event 3">
                     <div class="card-body">
                         <h3>Upcoming Puja</h3>
                         <p>Details about the special puja schedule and registration.</p>
@@ -772,7 +772,8 @@
                 </article>
 
                 <article class="card">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg" alt="Event 4">
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg"
+                        alt="Event 4">
                     <div class="card-body">
                         <h3>Temple Renovation</h3>
                         <p>See progress photos and learn how to contribute to restoration efforts.</p>
@@ -780,7 +781,8 @@
                 </article>
 
                 <article class="card">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg"
+                    <img loading="lazy"
+                        src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg"
                         alt="Event 5">
                     <div class="card-body">
                         <h3>Heritage Walk</h3>
@@ -789,7 +791,8 @@
                 </article>
 
                 <article class="card">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg" alt="Event 6">
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg"
+                        alt="Event 6">
                     <div class="card-body">
                         <h3>Volunteer Meet</h3>
                         <p>Connect with volunteers and find ways to take part in temple activities.</p>
@@ -805,56 +808,58 @@
     </section>
 
     <!-- Section 5: Photo Gallery (Collage) -->
-    <section class="gallery-section"
-        id="gallery">
+    <section class="gallery-section" id="gallery">
         <div class="gallery-inner">
             <h2 style="text-align:center; margin-bottom:18px; font-size:1.6rem; color:#111827;">Photo Gallery</h2>
             <div class="gallery-grid">
                 <figure class="item span-col-3 span-row-2" data-type="image"
                     data-src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg"
                     data-title="Temple — Main View">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg"
+                    <img loading="lazy"
+                        src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg"
                         alt="Temple main">
                 </figure>
 
                 <figure class="item span-col-3" data-type="image"
                     data-src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
                     data-title="Festival Celebration">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
                         alt="Festival">
                 </figure>
 
                 <figure class="item span-col-2" data-type="image"
                     data-src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg"
                     data-title="Ceremony">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg"
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg"
                         alt="Ceremony">
                 </figure>
 
                 <figure class="item span-col-2" data-type="image"
                     data-src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg"
                     data-title="Special Puja">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg" alt="Puja">
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg"
+                        alt="Puja">
                 </figure>
 
                 <figure class="item span-col-3" data-type="image"
                     data-src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg"
                     data-title="Restoration Works">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg"
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg"
                         alt="Renovation">
                 </figure>
 
                 <figure class="item" data-type="image"
                     data-src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg"
                     data-title="Volunteer Activities">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg"
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg"
                         alt="Volunteers">
                 </figure>
 
                 <figure class="item" data-type="image"
                     data-src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
                     data-title="Devotees">
-                    <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg" alt="Crowd">
+                    <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                        alt="Crowd">
                 </figure>
 
             </div>
@@ -877,7 +882,7 @@
         </div>
     </div>
 
-    <script>
+    <script async defer>
         (function () {
             const track = document.getElementById('carousel-track');
             const prevBtn = document.getElementById('carousel-prev');
@@ -968,7 +973,7 @@
         })();
     </script>
 
-    <script>
+    <script async defer>
         (function () {
             const galleryItems = Array.from(document.querySelectorAll('.gallery-grid .item'))
                 .map((el) => ({
@@ -1031,8 +1036,6 @@
 
         })();
     </script>
-
-   
 
 </body>
 

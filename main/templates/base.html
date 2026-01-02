@@ -393,6 +393,17 @@
     .about-arrow.open {
       transform: rotate(180deg);
     }
+
+    @media (min-width:700px) and (max-width:1024px) {
+      #mobile-drawer {
+        top: 13vh;
+      }
+
+      .drawer-menu {
+        top: 13vh;
+
+      }
+    }
   </style>
 
   {% endblock %}
@@ -515,7 +526,7 @@
     </div>
   </div>
 
-  <script>
+  <script async defer>
     (function () {
       let _warnTimer = null;
 
@@ -562,10 +573,10 @@
 
         // Ctrl + Shift + I / J 
         // (DevTools) — not blocked to allow debugging in development
-        // if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
-        //   e.preventDefault();
-        //   warn();
-        // }
+        if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
+          e.preventDefault();
+          warn();
+        }
 
 
         // Save Page Ctrl + S
@@ -584,7 +595,7 @@
   </script>
 
   <!-- google translate widget script -->
-  <script type="text/javascript">
+  <script type="text/javascript" async defer>
     function googleTranslateElementInit() {
       new google.translate.TranslateElement(
         { pageLanguage: 'en', includedLanguages: 'en,hi,bn,ta,te,ml,gu,kn,pa,mr,ur,as,or,sa,sd', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
@@ -626,7 +637,7 @@
 
 
   <!-- //dynamic changes in google widget -->
-  <script>
+  <script async defer>
     function addChooseLanguageOption() {
       const combo = document.querySelector(".goog-te-combo");
       if (!combo) return;
@@ -662,11 +673,8 @@
 
   </script>
 
-
-
-
-  <script type="text/javascript"
-    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async
+    defer></script>
 
 
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -693,7 +701,7 @@
       aboutToggle.classList.toggle("open");
     });
   </script>
-  
+
 
   <!-- dynamic reveal on scroll -->
   <!-- <script>

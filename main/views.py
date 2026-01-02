@@ -18,43 +18,35 @@ from django.core.mail import send_mail
 from .models import EmailLoginToken
 from .forms import UserUpdateForm, ProfileUpdateForm
 
-def login_view(request):
-    if request.method == "POST":
-        recaptcha_response = request.POST.get("g-recaptcha-response")
-        data = {
-            "secret": settings.RECAPTCHA_PRIVATE_KEY,
-            "response": recaptcha_response
-        }
-
-        verify = requests.post(
-            "https://www.google.com/recaptcha/api/siteverify",
-            data=data
-        )
-        result = verify.json()
-
-        if not result.get("success"):
-            messages.error(request, "Captcha verification failed. Please try again.")
-            return redirect("login")
-
-        # Continue normal logic
-        email = request.POST.get("email")
-        if email:
-            # Send login code logic here
-            # send_login_code(email)  # Your email function
-            messages.success(request, f"Login code sent to {email}.")
-            request.session["email"] = email  # Store for next step
-            return redirect("verify_code")  # Next view for code verification
-        else:
-            messages.error(request, "Email is required.")
-
-    return render(request, "login.html")
+from django.views.decorators.cache import cache_page
 
 def generate_code():
     return ''.join(random.choices(string.digits, k=6))
 
+
 def login_request(request):
     if request.method == "POST":
+        # ---- reCAPTCHA verification ----
+        recaptcha_response = request.POST.get("g-recaptcha-response")
+        verify = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={
+                "secret": settings.RECAPTCHA_PRIVATE_KEY,
+                "response": recaptcha_response
+            }
+        )
+        result = verify.json()
+
+        if not result.get("success"):
+            messages.error(request, "Captcha verification failed.")
+            return redirect("core:login")
+
+        # ---- Email + OTP ----
         email = request.POST.get("email")
+        if not email:
+            messages.error(request, "Email is required.")
+            return redirect("core:login")
+
         code = generate_code()
 
         EmailLoginToken.objects.create(email=email, code=code)
@@ -62,14 +54,18 @@ def login_request(request):
         send_mail(
             subject="Your Login Code",
             message=f"Your login code is: {code}",
-            from_email="kaustubhpathak9@gmail.com",
+            from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[email],
         )
+
         request.session["email"] = email
+        messages.success(request, "Login code sent to your email.")
+
         return redirect("core:verify_code")
 
-    return render(request, "login.html",{
-        "recaptcha_site_key": settings.RECAPTCHA_PUBLIC_KEY})
+    return render(request, "login.html", {
+        "recaptcha_site_key": settings.RECAPTCHA_PUBLIC_KEY
+    })
 
 def verify_code(request):
     email = request.session.get("email")
@@ -112,7 +108,6 @@ def verify_code(request):
         "cooldown_remaining": cooldown_remaining
     })
 
-# code for review
 def resend_code(request):
     email = request.session.get("email")
 
@@ -150,9 +145,6 @@ def resend_code(request):
     return redirect("core:verify_code")
 
 
-@login_required
-def home(request):
-    return render(request, "index.html")
 
 @login_required
 def donate_action(request):
@@ -189,21 +181,34 @@ def user_logout(request):
     list(messages.get_messages(request))
     return redirect("core:home")
 
-
 def home(request):
     return render(request, "index.html")
+
+@cache_page(60 * 30)
 def about(request):
     return render(request, "about.html")
+
+@cache_page(60 * 30)
 def trust_members(request):
     return render(request, "trust-members.html")
+
+@cache_page(60 * 30)
 def how_to_reach(request):
     return render(request, "how-to-reach.html")
+
+@cache_page(60 * 30)
 def donation_options(request):
     return render(request, "donation.html")
+
+@cache_page(60 * 30)
 def featured_news(request):
     return render(request, "featured-news.html")
+
+@cache_page(60 * 30)
 def contact(request):
     return render(request, "contact.html")
+
+@cache_page(60 * 30)
 def policy(request):
     return render(request, "policy.html")
 

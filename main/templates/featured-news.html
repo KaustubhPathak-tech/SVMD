@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}News{% endblock %}
-
-
-
+{% block title %}News - Gayatri Dham Deoria{% endblock %}
 
 {% block content %}
 <html lang="en">
@@ -12,16 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Featured News - Trust Grid</title>
-    {% load static %}
-    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
@@ -131,6 +120,101 @@
                 margin-bottom: 3vh;
             }
         }
+
+        /* News Modal */
+        .news-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1300;
+        }
+
+        .news-modal[aria-hidden="false"] {
+            display: flex;
+        }
+
+        .news-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+        }
+
+        .news-container {
+            position: relative;
+            z-index: 1310;
+            width: 92vw;
+            max-width: 900px;
+            max-height: 92vh;
+            background: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .news-modal-image img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .news-modal-body {
+            padding: 28px 30px 32px;
+            overflow-y: auto;
+        }
+
+        .news-modal-date {
+            font-size: 0.9rem;
+            color: #f59e0b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .news-modal-title {
+            font-size: 1.6rem;
+            margin-bottom: 14px;
+            color: #111827;
+        }
+
+        .news-modal-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #374151;
+        }
+
+        .news-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 28px rgba(217, 115, 15, 0.3);
+        }
+
+        .news-close:hover {
+            transform: scale(1.06);
+        }
+
+        @media (max-width: 640px) {
+            .news-modal-image img {
+                height: 220px;
+            }
+
+            .news-modal-title {
+                font-size: 1.35rem;
+            }
+        }
     </style>
 </head>
 
@@ -142,84 +226,171 @@
 
         <div class="news-grid">
             <!-- News Card 1 -->
-            <div class="news-card">
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+            <div class="news-card" data-title="New Charitable Program Launched" data-date="December 15, 2024"
+                data-image="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                data-content="Our trust has announced a comprehensive new charitable program aimed at supporting underprivileged communities. The program focuses on education, healthcare, and livelihood development with long-term sustainability.">
+
+                <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
                     alt="Trust Initiative" class="news-image">
                 <div class="news-content">
                     <div class="news-date">December 15, 2024</div>
                     <h3 class="news-title">New Charitable Program Launched</h3>
                     <p class="news-description">Our trust has announced a comprehensive new charitable program aimed at
                         supporting underprivileged communities.</p>
-                    <a href="#" class="news-btn">Read More →</a>
+                    <a href="#" class="news-btn" data-open-news>Read More →</a>
                 </div>
             </div>
 
             <!-- News Card 2 -->
-            <div class="news-card">
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg"
+            <div class="news-card" data-title="New Charitable Program Launched" data-date="December 15, 2024"
+                data-image="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                data-content="Our trust has announced a comprehensive new charitable program aimed at supporting underprivileged communities. The program focuses on education, healthcare, and livelihood development with long-term sustainability.">
+
+                <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994991/2_iwgnub.jpg"
                     alt="Community Impact" class="news-image">
                 <div class="news-content">
                     <div class="news-date">December 10, 2024</div>
                     <h3 class="news-title">Community Impact Report Released</h3>
                     <p class="news-description">Annual report highlights significant contributions and positive outcomes
                         from our trust initiatives across multiple regions.</p>
-                    <a href="#" class="news-btn">Read More →</a>
+                    <a href="#" class="news-btn" data-open-news>Read More →</a>
                 </div>
             </div>
 
             <!-- News Card 3 -->
-            <div class="news-card">
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg"
+            <div class="news-card" data-title="New Charitable Program Launched" data-date="December 15, 2024"
+                data-image="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                data-content="Our trust has announced a comprehensive new charitable program aimed at supporting underprivileged communities. The program focuses on education, healthcare, and livelihood development with long-term sustainability.">
+
+                <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994997/3_j9gvha.jpg"
                     alt="Partnership News" class="news-image">
                 <div class="news-content">
                     <div class="news-date">December 5, 2024</div>
                     <h3 class="news-title">Strategic Partnership Announced</h3>
                     <p class="news-description">Our trust partners with leading organizations to expand reach and impact
                         on education and healthcare initiatives.</p>
-                    <a href="#" class="news-btn">Read More →</a>
+                    <a href="#" class="news-btn" data-open-news>Read More →</a>
                 </div>
             </div>
 
             <!-- News Card 4 -->
-            <div class="news-card">
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg" alt="Awards"
+            <div class="news-card" data-title="New Charitable Program Launched" data-date="December 15, 2024"
+                data-image="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                data-content="Our trust has announced a comprehensive new charitable program aimed at supporting underprivileged communities. The program focuses on education, healthcare, and livelihood development with long-term sustainability.">
+
+                <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/4_kc4udh.jpg" alt="Awards"
                     class="news-image">
                 <div class="news-content">
                     <div class="news-date">November 28, 2024</div>
                     <h3 class="news-title">Receives National Recognition Award</h3>
                     <p class="news-description">Trust recognized for excellence in corporate social responsibility and
                         sustainable development practices.</p>
-                    <a href="#" class="news-btn">Read More →</a>
+                    <a href="#" class="news-btn" data-open-news>Read More →</a>
                 </div>
             </div>
 
             <!-- News Card 5 -->
-            <div class="news-card">
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg" alt="Scholarship"
+            <div class="news-card" data-title="New Charitable Program Launched" data-date="December 15, 2024"
+                data-image="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                data-content="Our trust has announced a comprehensive new charitable program aimed at supporting underprivileged communities. The program focuses on education, healthcare, and livelihood development with long-term sustainability.">
+
+                <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/5_ykilze.jpg" alt="Scholarship"
                     class="news-image">
                 <div class="news-content">
                     <div class="news-date">November 20, 2024</div>
                     <h3 class="news-title">Scholarship Program Expansion</h3>
                     <p class="news-description">Increased funding enables more students to benefit from our educational
                         scholarship and mentorship programs.</p>
-                    <a href="#" class="news-btn">Read More →</a>
+                    <a href="#" class="news-btn" data-open-news>Read More →</a>
                 </div>
             </div>
 
             <!-- News Card 6 -->
-            <div class="news-card">
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg" alt="Health"
+            <div class="news-card" data-title="New Charitable Program Launched" data-date="December 15, 2024"
+                data-image="https://res.cloudinary.com/dchlu4kif/image/upload/v1766994999/1_wtdevj.jpg"
+                data-content="Our trust has announced a comprehensive new charitable program aimed at supporting underprivileged communities. The program focuses on education, healthcare, and livelihood development with long-term sustainability.">
+
+                <img loading="lazy" src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg" alt="Health"
                     class="news-image">
                 <div class="news-content">
                     <div class="news-date">November 15, 2024</div>
                     <h3 class="news-title">Healthcare Initiative Goes Digital</h3>
                     <p class="news-description">Launch of digital health platform to provide better access to medical
                         services in rural and underserved areas.</p>
-                    <a href="#" class="news-btn">Read More →</a>
+                    <a href="#" class="news-btn" data-open-news>Read More →</a>
                 </div>
             </div>
         </div>
+
+        <!-- News Modal -->
+        <div class="news-modal" id="news-modal" aria-hidden="true">
+            <div class="news-overlay" id="news-overlay"></div>
+
+            <div class="news-container" role="dialog" aria-modal="true">
+                <button class="news-close" id="news-close" aria-label="Close">
+                    ✕
+                </button>
+
+                <div class="news-modal-image">
+                    <img loading="lazy" id="news-modal-img" alt="">
+                </div>
+
+                <div class="news-modal-body">
+                    <div class="news-modal-date" id="news-modal-date"></div>
+                    <h2 class="news-modal-title" id="news-modal-title"></h2>
+                    <p class="news-modal-text" id="news-modal-text"></p>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        (function () {
+            const modal = document.getElementById('news-modal');
+            const overlay = document.getElementById('news-overlay');
+            const closeBtn = document.getElementById('news-close');
+
+            const img = document.getElementById('news-modal-img');
+            const title = document.getElementById('news-modal-title');
+            const date = document.getElementById('news-modal-date');
+            const text = document.getElementById('news-modal-text');
+
+            function openModal(card) {
+                img.src = card.dataset.image;
+                img.alt = card.dataset.title;
+                title.textContent = card.dataset.title;
+                date.textContent = card.dataset.date;
+                text.textContent = card.dataset.content;
+
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.setAttribute('aria-hidden', 'true');
+                img.src = '';
+                document.body.style.overflow = '';
+            }
+
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-open-news]');
+                if (!btn) return;
+
+                e.preventDefault();
+                const card = btn.closest('.news-card');
+                if (card) openModal(card);
+            });
+
+            overlay.addEventListener('click', closeModal);
+            closeBtn.addEventListener('click', closeModal);
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+        })();
+    </script>
+
 </body>
 
 </html>
