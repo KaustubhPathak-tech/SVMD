@@ -1,5 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.core.files.base import ContentFile
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import logout
+from django.db import transaction
 from django.http import HttpResponse
 import requests
 from .models import Profile
@@ -10,19 +13,20 @@ import random
 import string
 from datetime import timedelta, timezone as dt_timezone
 from django.utils import timezone
-
-from django.shortcuts import render, redirect
+from .utils import generate_receipt_pdf
+from django.shortcuts import render, redirect, get_list_or_404,get_object_or_404
+from django.template.loader import render_to_string
+from weasyprint import HTML
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from django.core.mail import send_mail
-from .models import EmailLoginToken
-from .forms import UserUpdateForm, ProfileUpdateForm
+from django.core.mail import send_mail,EmailMessage
+from .models import EmailLoginToken, DonationReceiptRequest, Transaction,Address
+from .forms import UserUpdateForm, ProfileUpdateForm, DonationReceiptForm,AddressUpdateForm
 
 from django.views.decorators.cache import cache_page
 
 def generate_code():
     return ''.join(random.choices(string.digits, k=6))
-
 
 def login_request(request):
     if request.method == "POST":
@@ -145,35 +149,154 @@ def resend_code(request):
     return redirect("core:verify_code")
 
 
-
 @login_required
 def donate_action(request):
-    return render(request, "donate.html")
+    profile = request.user.profile  # assumes Profile is created at signup
+    show_history = False
+    
+    if request.method == "POST":
+        form = DonationReceiptForm(request.POST)
+
+        if form.is_valid():
+            receipt_request = form.save(commit=False)
+            receipt_request.profile = profile
+            receipt_request.status = "PENDING"   #to change later "PENDING"
+            receipt_request.save()
+
+            messages.success(
+                request,
+                "Your receipt request has been submitted successfully and is under verification."
+            )
+            show_history = True
+            form = DonationReceiptForm()   # redirect to same page or status page
+
+        else:
+            messages.error(
+                request,
+                "Please correct the highlighted errors and submit again."
+            )
+
+    else:
+        form = DonationReceiptForm()
+        if request.GET.get("view") == "history":
+            show_history = True
+            
+            
+    receipt_history = DonationReceiptRequest.objects.filter(
+        profile=profile
+    ).order_by("-created_at")
+    return render(
+        request,
+        "donate.html",
+        {
+            "form": form,
+            "receipt_history": receipt_history,
+            "show_history": show_history,
+        }
+    )
+
+@login_required
+def receipt_request_history(request):
+    requests = DonationReceiptRequest.objects.filter(
+        profile=request.user.profile
+    ).order_by("-created_at")
+
+    return render(
+        request,
+        "receipt_history.html",
+        {"requests": requests}
+    )
 
 @login_required
 def view_profile(request):
     return render(request, "profile.html")
 
 @login_required
-def edit_profile(request):
-    if request.method == "POST":
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+# def edit_profile(request):
+#     if request.method == "POST":
+#         u_form = UserUpdateForm(request.POST, instance=request.user)
+#         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
-        if u_form.is_valid() and p_form.is_valid():
+#         if u_form.is_valid() and p_form.is_valid():
+#             u_form.save()
+#             p_form.save()
+#             return redirect("core:view_profile")
+
+#     else:
+#         u_form = UserUpdateForm(instance=request.user)
+#         p_form = ProfileUpdateForm(instance=request.user.profile)
+
+#     context = {
+#         "u_form": u_form,
+#         "p_form": p_form
+#     }
+#     return render(request, "edit_profile.html", context)
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    profile = user.profile
+
+    # 🔹 ADDED: Safe address retrieval
+    address, created = Address.objects.get_or_create(profile=profile)
+
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        a_form = AddressUpdateForm(request.POST, instance=address)  # 🔹 ADDED
+
+        if u_form.is_valid() and p_form.is_valid() and a_form.is_valid():
             u_form.save()
             p_form.save()
+            a_form.save()  # 🔹 ADDED
             return redirect("core:view_profile")
 
     else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
+        u_form = UserUpdateForm(instance=user)
+        p_form = ProfileUpdateForm(instance=profile)
+        a_form = AddressUpdateForm(instance=address)  # 🔹 ADDED
 
     context = {
         "u_form": u_form,
-        "p_form": p_form
+        "p_form": p_form,
+        "a_form": a_form,  # 🔹 ADDED
     }
     return render(request, "edit_profile.html", context)
+
+@login_required
+def download_receipt_pdf(request, pk):
+    receipt = get_object_or_404(
+        DonationReceiptRequest,
+        pk=pk,
+        profile=request.user.profile,
+        status="APPROVED"
+    )
+
+
+    context = {
+        "receipt": receipt,
+        "LOGO_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/wallpaperflare.com_wallpaper_plphlg.jpg",
+        "TEMPLE_BG_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg",
+        "DEITY_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1766994993/sample_n9cu8f.jpg",
+        "SIGNATURE_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1767523466/signature_iiw9fy.png",
+    }
+
+    html_string = render_to_string(
+        "receipt_pdf.html",
+        context
+    )
+
+    pdf = HTML(string=html_string).write_pdf()
+
+    response = HttpResponse(pdf, content_type="application/pdf")
+    response["Content-Disposition"] = (
+        f'attachment; filename="Donation_Receipt_{receipt.id}.pdf"'
+    )
+    
+    
+
+    return response
+
 
 
 def user_logout(request):
@@ -211,4 +334,122 @@ def contact(request):
 @cache_page(60 * 30)
 def policy(request):
     return render(request, "policy.html")
+
+
+#admin views
+@staff_member_required
+def staff_dashboard(request):
+    """
+    Central navigation page for staff actions
+    """
+    return render(
+        request,
+        "dashboard.html"
+    )
+
+@staff_member_required
+def admin_receipt_list(request):
+    receipts = DonationReceiptRequest.objects.all().order_by("-created_at")
+    return render(request, "receipt_list.html", {"receipts": receipts})
+
+@staff_member_required
+def update_receipt_status(request, pk):
+    receipt = get_object_or_404(DonationReceiptRequest, pk=pk)
+
+    if request.method == "POST":
+        status = request.POST.get("status")
+        admin_remark = request.POST.get("admin_remark", "").strip()
+
+        with transaction.atomic():
+
+            receipt.status = status
+            receipt.admin_remark = admin_remark
+            receipt.save()
+
+            # ─────────────── APPROVAL FLOW ───────────────
+            if status == "APPROVED":
+
+                # Prevent duplicate transaction creation
+                txn, created = Transaction.objects.get_or_create(
+                    transaction_id=receipt.receipt_id,
+                    defaults={
+                        "profile": receipt.profile,
+                        "transaction_date": timezone.now(),
+                        "donor_name": receipt.donor_name,
+                        "amount": receipt.donation_amount,
+                        "status": "APPROVED",
+                    }
+                )
+
+                # Generate PDF
+                pdf_bytes = generate_receipt_pdf(receipt)
+                if not pdf_bytes:
+                    raise Exception("PDF generation failed")
+
+                # Attach PDF to transaction
+                txn.receipt_file.save(
+                    f"{receipt.receipt_id}.pdf",
+                    ContentFile(pdf_bytes),
+                    save=False
+                )
+
+                txn.status = "RECEIPT_SENT"
+                txn.save()
+
+                # Send approval email
+                email = EmailMessage(
+                    subject="Donation Receipt Approved",
+                    body=(
+                        f"Dear {receipt.donor_name},\n\n"
+                        "Your donation has been verified and approved.\n"
+                        "Please find your receipt attached.\n\n"
+                        "Thank you for supporting our trust."
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[receipt.email],
+                )
+
+                email.attach(
+                    f"{receipt.receipt_id}.pdf",
+                    pdf_bytes,
+                    "application/pdf"
+                )
+
+                email.send(fail_silently=False)
+
+            # ─────────────── REJECTION FLOW ───────────────
+            else:
+                EmailMessage(
+                    subject="Donation Receipt Request Rejected",
+                    body=(
+                        f"Dear {receipt.donor_name},\n\n"
+                        "Your receipt request has been rejected for the following reason:\n\n"
+                        f"{admin_remark}\n\n"
+                        "If you believe this is an error, please contact us."
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[receipt.email],
+                ).send(fail_silently=False)
+
+        messages.success(request, "Receipt processed successfully.")
+        return redirect("core:admin-receipt-list")
+
+    return render(request, "receipt_detail.html", {"receipt": receipt})
+
+
+@staff_member_required
+def admin_transaction_list(request):
+    successful_transactions = Transaction.objects.filter(
+        status__in=["APPROVED", "RECEIPT_SENT"]
+    ).order_by("-transaction_date")
+
+    context = {
+        "transactions": successful_transactions,
+    }
+
+    return render(
+        request,
+        "transaction_list.html",
+        context
+    )
 

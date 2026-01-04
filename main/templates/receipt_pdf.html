@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+
+    body {
+      font-family: "Times New Roman", serif;
+      font-size: 13.5px;
+      color: #000;
+      position: relative;
+    }
+
+    /* ---------- Background Layers ---------- */
+
+    .page-border {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 6px solid #d4a017;
+      padding: 18px;
+    }
+
+    .temple-bg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85%;
+      opacity: 0.06;
+      z-index: -1;
+    }
+
+    .deity-watermark {
+      position: fixed;
+      bottom: 60px;
+      left: 30px;
+      width: 180px;
+      opacity: 0.08;
+      z-index: -1;
+    }
+
+    /* ---------- Header ---------- */
+
+    .header {
+      text-align: center;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 90px;
+    }
+
+    .org-name {
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #8b0000;
+    }
+
+    .org-address {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .receipt-title {
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: underline;
+      margin-top: 10px;
+    }
+
+    /* ---------- Meta Row ---------- */
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      margin: 14px 0;
+      font-size: 13px;
+    }
+
+    /* ---------- Table ---------- */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+    }
+
+    td {
+      padding: 6px 4px;
+      vertical-align: top;
+    }
+
+    td.label {
+      width: 30%;
+      font-weight: bold;
+    }
+
+    /* ---------- Signature ---------- */
+
+    .signature-section {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .signature img {
+      width: 140px;
+    }
+
+    .signature-name {
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    /* ---------- Footer ---------- */
+
+    .footer {
+      position: fixed;
+      bottom: 24px;
+      left: 20mm;
+      right: 20mm;
+      font-size: 11.5px;
+      line-height: 1.4;
+    }
+
+    .note {
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Decorative Border -->
+  <div class="page-border"></div>
+
+  <!-- Watermarks -->
+  <img src="{{TEMPLE_BG_URL}}" class="temple-bg" alt="temple-bg">
+  <img src="{{DEITY_URL}}" class="deity-watermark" alt="DEITY_URL">
+
+  <!-- Header -->
+  <div class="header">
+    <img src="{{LOGO_URL}}" class="logo" alt="logo">
+
+    <div class="org-name">Shri Vaishno Mata Ji Mandir Gayatri Dham</div>
+    <div class="org-address">
+      Registered Office: Sajawn, Deoria,Uttar Pradesh – 274508<br>
+      PAN: ABHTS1443H
+    </div>
+
+    <div class="receipt-title">Donation Receipt</div>
+  </div>
+
+  <!-- Meta -->
+  <div class="meta">
+    <div><strong>Receipt No:</strong> {{ receipt.receipt_id }}</div>
+    <div><strong>Printed On:</strong> {{ receipt.created_at|date:"d/m/Y" }}</div>
+  </div>
+
+  <!-- Details -->
+  <table>
+    <tr>
+      <td class="label">Received With Thanks From</td>
+      <td>{{ receipt.donor_name }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Address</td>
+      <td>
+        {{ receipt.address }},
+        {{ receipt.district }},
+        {{ receipt.state }} – {{ receipt.pincode }}<br>
+        {{ receipt.country }}
+      </td>
+    </tr>
+
+    <tr>
+      <td class="label">PAN Number</td>
+      <td>{{ receipt.pan_number|default:"—" }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Mobile Number</td>
+      <td>{{ receipt.mobile }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Email ID</td>
+      <td>{{ receipt.email }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Purpose of Donation</td>
+      <td>{{ receipt.purpose|default:"General Donation" }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Mode of Donation</td>
+      <td>{{ receipt.payment_mode|default:"Online" }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Date of Donation</td>
+      <td>{{ receipt.created_at|date:"d/m/Y" }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Amount of Donation</td>
+      <td>₹ {{ receipt.donation_amount }}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Amount (In Words)</td>
+      <td>{{ receipt.amount_in_words }}</td>
+    </tr>
+  </table>
+
+  <!-- Signature -->
+  <div class="signature-section">
+    <div></div>
+
+    <div class="signature">
+      <img src="{{SIGNATURE_URL}}" alt="signature">
+      <div class="signature-name">Authorized Signatory</div>
+      <div>(Treasurer)</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="note">
+      • 50% of voluntary contribution is eligible for deduction under Section 80G(2)(b)
+      of the Income Tax Act, 1961, subject to applicable conditions.
+    </div>
+
+    <div class="note">
+      • This is a system-generated receipt and does not require a physical signature.
+    </div>
+
+    <div class="note">
+      Contact: support@exampletrust.org | Website: www.exampletrust.org
+    </div>
+  </div>
+
+</body>
+
+</html>

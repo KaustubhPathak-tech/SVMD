@@ -73,7 +73,7 @@
         }
 
         .bank-details .bank-qr img {
-            max-width: 140px;
+            max-width: 220px;
             width: 100%;
             height: auto;
             display: inline-block;
@@ -177,6 +177,112 @@
             height: 220px;
         }
 
+        /* Donate Modal */
+        dialog.modal[open]::backdrop {
+            background: rgba(15, 23, 42, 0.55);
+            /* deep slate overlay */
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .modal-box {
+            background: linear-gradient(145deg,
+                    rgba(255, 255, 255, 0.95),
+                    rgba(245, 247, 250, 0.98));
+            border-radius: 16px;
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            padding: 2rem;
+        }
+
+        .modal-box h3 {
+            color: #1e293b;
+            /* slate-800 */
+            letter-spacing: 0.4px;
+        }
+
+        .modal-box p {
+            color: #475569;
+            /* slate-600 */
+        }
+
+        .modal-box .border {
+            border-color: rgba(0, 0, 0, 0.08);
+            transition: all 0.25s ease;
+        }
+
+        .modal-box .border:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .methods {
+            padding: 2vh 2vw;
+        }
+
+        .badge-success {
+            background-color: #16a34a;
+            padding: 6px;
+            color: #ffffff;
+            border-radius: 4px;
+        }
+
+        .badge-info {
+            background-color: #2563eb;
+            border-radius: 4px;
+            padding: 6px;
+            color: #ffffff;
+        }
+
+        .alert-warning {
+            background: rgba(254, 243, 199, 0.85);
+            color: #92400e;
+            padding: 6px;
+            border: 1px solid rgba(251, 191, 36, 0.45);
+        }
+
+        .modal-action .btn {
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .modal-action .btn-outline {
+            border-color: #64748b;
+            color: #334155;
+        }
+
+        .modal-action .btn-outline:hover {
+            background-color: #334155;
+            color: #ffffff;
+        }
+
+
+
+        .apply-receipt-link {
+            color: #b00020;
+            font-weight: 700;
+            text-decoration: underline;
+            display: inline;
+        }
+
+        .receipt-flow {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .imp-blink {
+            display: inline-block;
+            width: 2vw;
+            height: 4vh;
+            margin-left: 6px;
+            vertical-align: middle;
+            animation: blink 1.2s ease-in-out infinite;
+        }
+
         @media (max-width: 767px) {
             .donate-intro .container {
                 grid-template-columns: 1fr;
@@ -188,6 +294,14 @@
 
             .donate-intro .intro-content {
                 order: 1;
+            }
+
+        }
+
+        @media (max-width:1000px) {
+            .imp-blink {
+                width: 6vw;
+                height: 4vh;
             }
         }
     </style>
@@ -202,12 +316,72 @@
                     Even
                     small contributions make a large impact over time.</p>
                 <div class="donate-cta">
-                    <a class="btn donate-btn" href="/donate">Donate</a>
+                    <!-- <a class="btn donate-btn" href="">Donate</a> -->
+                    <button class="btn donate-btn" onclick="donation_modal.showModal()">
+                        Donate
+                    </button>
                     <a class="btn donate-btn" href="/contact-us">Contact</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- donation modal -->
+    <dialog id="donation_modal" class="modal">
+        <div class="modal-box max-w-md">
+
+            <!-- Modal Header -->
+            <h3 class="font-bold text-lg text-center">
+                Donation Methods
+            </h3>
+
+            <p class="py-4 text-sm text-center text-gray-600">
+                You may donate using any of the following methods.
+            </p>
+            <br />
+            <!-- Methods -->
+            <div class="space-y-4 mt-8">
+
+                <!-- UPI -->
+                <div class="flex items-center gap-3 p-3 rounded-lg border bg-base-100 methods">
+                    <span class="badge badge-success">UPI</span>
+                    <div>
+                        <p class="font-semibold">Scan QR Code</p>
+                        <p class="text-xs text-gray-500">
+                            Use any UPI app (GPay, PhonePe, Paytm, BHIM)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bank Transfer -->
+                <div class="flex items-center gap-3 p-3 rounded-lg border bg-base-100 methods">
+                    <span class="badge badge-info">Bank</span>
+                    <div>
+                        <p class="font-semibold">Bank Transfer</p>
+                        <p class="text-xs text-gray-500">
+                            NEFT / RTGS / IMPS supported
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <!-- Info -->
+            <div class="alert alert-warning mt-5 text-sm">
+                <span>
+                    After donating, please apply for a receipt for tax benefits under Section 80G.
+                </span>
+            </div>
+            <br />
+            <!-- Actions -->
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn btn-outline w-full">Close</button>
+                </form>
+            </div>
+
+        </div>
+    </dialog>
 
     <div class="bank-details">
         <div class="bank-logo">
@@ -218,10 +392,10 @@
             <h2>Bank Details</h2>
             <p><strong>Account Name:</strong> SHRI VAISHNO MATA JI MANDIR GAYATRI DHAM</p>
             <p><strong>Bank Name:</strong> Punjab National Bank (PNB)</p>
-            <p><strong>Account Number:</strong> 000123456789</p>
-            <p><strong>IFSC Code:</strong> PUNB0123456</p>
-            <p><strong>Branch:</strong> Main Branch, New Delhi</p>
-            <p><strong>UPI ID:</strong> 7798257964@pnb</p>
+            <p><strong>Account Number:</strong> 7941002100003755</p>
+            <p><strong>IFSC Code:</strong> PUNB0794100</p>
+            <p><strong>Branch:</strong> Lar, Deoria, U.P.</p>
+            <p><strong>UPI ID:</strong> 7798257964m@pnb</p>
             <small>Use the above details for NEFT/RTGS/IMPS. Please mention <em>"Donation"</em> in the payment remarks
                 and
                 keep the receipt for tax purposes.</small>
@@ -233,12 +407,42 @@
         </div>
 
         <div class="bank-disclaimer" role="note" aria-label="donation disclaimer">
-            <strong>Disclaimer:</strong> Your donations are eligible for tax deductions under Section 80G of the Income
-            Tax
-            Act, 1961. Please keep your donation receipt for tax purposes. For queries, contact <a
-                href="mailto:info@Gayatri Dham Deoria.org">info@Gayatri Dham Deoria.org</a>.
+            <strong>Disclaimer:</strong> Your donations are eligible for tax deduction under Section 80G of the Income
+            Tax Act, 1961.
+            <br><br>
+
+            <strong>
+                To receive your donation receipt for tax purposes,
+                <a href="/donation-receipt" class="apply-receipt-link">Apply here</a>.
+                <img src="{% static 'images/new.gif' %}" alt="Important" class="imp-blink" aria-hidden="true" />
+            </strong>
+            <br><br>
+
+            <span class="receipt-flow">
+                <strong>How the receipt process works:</strong><br>
+                • Make a donation using QR code or bank transfer.<br>
+                • Submit a receipt request using the “Apply here” link.<br>
+                • Our team will verify your donation details.<br>
+                • Once approved, the receipt will be sent to your registered email.<br>
+                • If verification fails, you will be informed with the reason.
+            </span>
+            <br><br>
+
+            For any assistance, contact
+            <a href="mailto:support@gayatridham.org">support@gayatridham.org</a>.
         </div>
+
     </div>
+
+    
+    <script>
+        if (window.location.pathname === "/donation-options") {
+            window.addEventListener("load", function () {
+                donation_modal.showModal();
+            });
+        }
+    </script>
+
 </body>
 
 </html>

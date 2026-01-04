@@ -15,11 +15,10 @@
 </head>
 
 <body>
-    <section class="flex justify-center my-6">
+    <!-- <section class="flex justify-center my-6">
         <div class="card w-full max-w-md border border-base-300 shadow-2xl profileCard 
                 bg-gradient-to-b from-base-100 to-base-200">
 
-            <!-- Avatar -->
             <figure class="px-8 pt-8">
                 {% if user.profile.avatar %}
                 <img src="{{ user.profile.avatar.url }}" alt="Profile Image"
@@ -30,8 +29,7 @@
                 {% endif %}
             </figure>
 
-            <!-- Details -->
-            <!-- CHANGES: removed items-center & text-center → added text-left and w-full -->
+        
             <div class="card-body text-left">
 
                 <h2 class="card-title">{{ user.first_name }} {{ user.last_name }}</h2>
@@ -45,7 +43,6 @@
                     <strong>Bio:</strong> {{ user.profile.bio }}
                 </p>
 
-                <!-- Button -->
                 <div class="card-actions mt-3">
                     <a href="{% url 'core:edit_profile' %}" class="btn btn-primary btn-wide">
                         Edit Profile
@@ -54,8 +51,89 @@
 
             </div>
         </div>
-    </section>
+    </section> -->
 
+    <section class="flex justify-center my-6 px-4">
+        <div class="card w-full max-w-md border border-base-300 shadow-2xl 
+                bg-gradient-to-b from-base-100 to-base-200 p-6">
+
+            <!-- Avatar -->
+            <figure class="flex justify-center">
+                {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="Profile Image"
+                    class="rounded-xl w-40 h-40 object-cover shadow-lg">
+                {% else %}
+                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995285/user-avatar_hxmpbp.png"
+                    alt="Default Avatar" class="rounded-xl w-40 h-40 object-cover shadow-lg">
+                {% endif %}
+            </figure>
+
+            <!-- Details -->
+            <div class="card-body text-left p-0 mt-6">
+
+                <h2 class="card-title">
+                    {{ user.profile.donor_name|default:user.username }}
+                </h2>
+
+                <p class="text-sm opacity-80">@{{ user.username }}</p>
+
+                <div class="divider my-3"></div>
+
+                <!-- Personal Info -->
+                <p><strong>Email:</strong> {{ user.profile.email|default:user.email }}</p>
+                <p><strong>Phone:</strong> {{ user.profile.phone|default:"—" }}</p>
+                <p><strong>Date of Birth:</strong> {{ user.profile.date_of_birth|date:"d M Y"|default:"—" }}</p>
+                <p><strong>Gender:</strong> {{ user.profile.get_gender_display }}</p>
+
+                <div class="divider my-3"></div>
+
+                <!-- ID Details -->
+                <p>
+                    <strong>ID Type:</strong>
+                    {{ user.profile.get_photo_id_type_display|default:"—" }}
+                </p>
+                <p>
+                    <strong>ID Number:</strong>
+                    {{ user.profile.photo_id_number|default:"—" }}
+                </p>
+
+                <div class="divider my-3"></div>
+
+                <!-- Address -->
+                {% if user.profile.address %}
+                <p class="font-semibold">Address</p>
+                <p class="text-sm leading-relaxed">
+                    {{ user.profile.address.address_line }}<br>
+                    {{ user.profile.address.village_or_post }},
+                    {{ user.profile.address.district }}<br>
+                    {{ user.profile.address.state }},
+                    {{ user.profile.address.country }}<br>
+                    <strong>Pincode:</strong> {{ user.profile.address.pincode }}
+                </p>
+                {% else %}
+                <p class="italic opacity-70">Address not added</p>
+                {% endif %}
+
+                <div class="divider my-3"></div>
+
+                <!-- Bio -->
+                {% if user.profile.bio %}
+                <p><strong>Bio:</strong></p>
+                <p class="text-sm opacity-90">{{ user.profile.bio }}</p>
+                {% else %}
+                <p class="italic opacity-70">No bio added</p>
+                {% endif %}
+
+                <!-- Action -->
+                <div class="card-actions mt-6">
+                    <a href="{% url 'core:edit_profile' %}" class="btn btn-primary btn-wide">
+                        Edit Profile
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <br />
 </body>

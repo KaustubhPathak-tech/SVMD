@@ -58,6 +58,26 @@
             box-shadow: 0 12px 30px rgba(255, 136, 0, 0.4);
         }
 
+        .navbar .logo:hover{
+            transform: translateY(0px);
+            box-shadow: none;
+
+        } 
+
+       
+
+        #navbar_avatar {
+            /* height: 3vh; */
+            width: 34px;
+        }
+        .avatarList{
+            border-radius: 5px;
+        }
+
+        .avatarItem{
+            padding: 1vh;
+        }
+
         @media (min-width:1024px) and (max-width:1300px) {
 
             .navbar-start,
@@ -114,7 +134,7 @@
                 <i class="fas fa-times text-gray-700 toggle-close"></i>
             </label>
 
-            <a class="btn btn-ghost text-xl hidden lg:flex">Gayatri Dham</a>
+            <a class="btn btn-ghost text-xl hidden lg:flex logo">Gayatri Dham</a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
@@ -128,15 +148,13 @@
                 </li>
                 <li><a href="/how-to-reach">Gayatri Dham</a></li>
                 <li><a href="/donation-options">Donation Options</a></li>
-                <li><a href="/donate">Donation Receipt</a></li>
+                <li><a href="/donation-receipt">Donation Receipt</a></li>
                 <li><a href="/featured-news">Featured News</a></li>
                 <li><a href="/contact-us">Contact</a></li>
             </ul>
         </div>
-        <div class="navbar-end">
+        <!-- <div class="navbar-end">
             <a class="btn" href="/donation-options">Donate</a>
-
-            <!-- <a class="btn" href="{% url 'core:logout' %}">Logout</a> -->
 
             {% if request.user.is_authenticated %}
             <form method="POST" action="{% url 'core:logout' %}">
@@ -148,7 +166,90 @@
                 <button class="btn">Login</button>
             </a>
             {% endif %}
+        </div> -->
+
+
+        <div class="navbar-end gap-2">
+
+            {% if request.user.is_authenticated %}
+            <!-- Avatar Dropdown -->
+            <div class="dropdown dropdown-end dropdown-hover">
+                <label tabindex="0" class="avatar">
+                    <div>
+                        <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1766995285/user-avatar_hxmpbp.png"
+                            id="navbar_avatar" alt="Default Avatar">
+                    </div>
+                </label>
+
+                <!-- <ul tabindex="0"
+                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+
+                    <li>
+                        <a href="{% url 'core:view_profile' %}">
+                            Profile
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'core:donation-receipt' %}?view=history">
+                            Transaction History
+                        </a>
+                    </li>
+
+                    <li>
+                        <form method="POST" action="{% url 'core:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="w-full text-left">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul> -->
+                <ul class="menu dropdown-content mt-4 z-[1] p-4 w-64
+           bg-base-100 rounded-2xl shadow-xl
+           font-medium text-base-content
+           space-y-2 avatarList">
+
+                    <li>
+                        <a href="{% url 'core:view_profile' %}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 avatarItem">
+                            Profile
+                        </a>
+                    </li>
+
+                    <li p-2>
+                        <a href="{% url 'core:donation-receipt' %}?view=history"
+                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 avatarItem">
+                            Transactions
+                        </a>
+                    </li>
+
+                    <div class="divider my-1"></div>
+
+                    <li p-2>
+                        <form method="POST" action="{% url 'core:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="w-full text-left px-3 py-2 rounded-lg
+                           text-error hover:bg-error/10 avatarItem">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+
+            {% else %}
+            <!-- Login Button -->
+            <a href="{% url 'core:login' %}">
+                <button class="btn">Login</button>
+            </a>
+            {% endif %}
+
+            <a class="btn btn-outline" href="/donation-options">Donate</a>
+
         </div>
+
     </div>
 
 </body>

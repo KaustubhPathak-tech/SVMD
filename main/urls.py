@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
@@ -15,7 +16,9 @@ urlpatterns = [
     path('contact-us/', views.contact, name="contact"),
     path("policy/",views.policy,name="policy"),
     
-    path("donate/", views.donate_action, name="donate"),
+    path("donation-receipt/", views.donate_action, name="donation-receipt"),
+    path("receipt/<int:pk>/pdf/", views.download_receipt_pdf, name="download_receipt_pdf"),
+
     
     path("login/", views.login_request, name="login"),
     path("verify/", views.verify_code, name="verify_code"),
@@ -24,6 +27,10 @@ urlpatterns = [
     path("profile/", views.view_profile, name="view_profile"),
     path("profile/edit/", views.edit_profile, name="edit_profile"),
     
+    path("staff/",views.staff_dashboard,name="staff-dashboard"),
+    path("staff/receipts/", views.admin_receipt_list, name="admin-receipt-list"),
+    path("staff/receipts/<int:pk>/", views.update_receipt_status, name="admin-receipt-detail"),
+    path("staff/transactions/",views.admin_transaction_list,name="admin-transaction-list"),
 
    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

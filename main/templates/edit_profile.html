@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
     <style>
         /* ---------- Base Styling ---------- */
         .editForm {
@@ -118,6 +118,41 @@
                 font-size: 1rem;
             }
         }
+
+        /* ---------- Address Section ---------- */
+        .address-section {
+            background-color: oklch(var(--b1));
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.2rem;
+
+        }
+
+        /* Address labels */
+        .address-section .label-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Grid layout for larger screens */
+        @media (min-width: 768px) {
+            .address-section {
+                padding: 1.5rem;
+            }
+
+            .address-section-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+            }
+        }
+
+        /* Full-width fields */
+        .address-section textarea,
+        .address-section .input,
+        .address-section select {
+            width: 100%;
+        }
     </style>
 
 </head>
@@ -194,8 +229,7 @@
 
                         {{ p_form.bio }}
                     </label>
-                    <br />
-                    <br />
+
                     <!-- Avatar -->
                     <label class="form-control" id="avatar">
                         <span class="label-text">Avatar</span>
@@ -203,6 +237,46 @@
                             {{ p_form.avatar }}
                         </div>
                     </label>
+                    <br />
+                    <br />
+                    <div class="address-section mt-8 space-y-4">
+
+                        <div class="divider">Address Details</div>
+
+                        <label class="form-control w-full">
+                            <span class="label-text">Address</span>
+                            {{ a_form.address_line }}
+                        </label>
+
+                        <div class="address-section-grid">
+                            <label class="form-control w-full">
+                                <span class="label-text">Country</span>
+                                {{ a_form.country }}
+                            </label>
+
+                            <label class="form-control w-full">
+                                <span class="label-text">State</span>
+                                {{ a_form.state }}
+                            </label>
+
+                            <label class="form-control w-full">
+                                <span class="label-text">District</span>
+                                {{ a_form.district }}
+                            </label>
+
+                            <label class="form-control w-full">
+                                <span class="label-text">Village / Post</span>
+                                {{ a_form.village_or_post }}
+                            </label>
+
+                        </div>
+
+                        <label class="form-control w-full">
+                            <span class="label-text">Pincode</span>
+                            {{ a_form.pincode }}
+                        </label>
+
+                    </div>
                     <br />
                     <br />
                     <!-- Buttons -->
@@ -223,6 +297,9 @@
         </div>
     </section>
     <br />
+
+
+
 
     <script async defer>
         const updateForm = document.querySelector(".updateProfile");

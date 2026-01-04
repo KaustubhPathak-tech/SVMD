@@ -439,7 +439,7 @@
 
         <li><a href="/how-to-reach" class="text-xl"> SAJAWN</a></li>
         <li><a href="/donation-options" class="text-xl"> Donation Options</a></li>
-        <li><a href="/donate" class="text-xl">Donation Receipt</a></li>
+        <li><a href="/donation-receipt" class="text-xl">Donation Receipt</a></li>
         <li><a href="/featured-news" class="text-xl">Featured News</a></li>
         <li><a href="/contact-us" class="text-xl">Contact</a></li>
       </ul>
@@ -573,10 +573,10 @@
 
         // Ctrl + Shift + I / J 
         // (DevTools) — not blocked to allow debugging in development
-        if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
-          e.preventDefault();
-          warn();
-        }
+        // if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
+        //   e.preventDefault();
+        //   warn();
+        // }
 
 
         // Save Page Ctrl + S
@@ -724,13 +724,27 @@
 
     });
   </script> -->
-</body>
+
+  {% block extra_js %}
+  <script>
+    window.addEventListener("load", function () {
+      const modal = document.getElementById("donation_modal");
+      if (modal) {
+        modal.showModal();
+      }
+    });
+  </script>
+  {% endblock %}
+
+<!-- </body> -->
 
 
 
 {% include "footer.html" %}
 
 {% include 'scroll_to_top.html' %}
+
+
 </body>
 
 </html>

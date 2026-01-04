@@ -1,0 +1,25 @@
+{% block title %}Admin Donation Receipt List{% endblock %}
+
+<h1>Donation Receipt Requests</h1>
+
+<table class="table">
+  <tr>
+    <th>Donor</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+
+  {% for r in receipts %}
+  <tr>
+    <td>{{ r.donor_name }}</td>
+    <td>₹{{ r.donation_amount }}</td>
+    <td>{{ r.status }}</td>
+    <td>
+      <a href="{% url 'core:admin-receipt-detail' r.id %}">
+        Review
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>

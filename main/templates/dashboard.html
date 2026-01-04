@@ -1,0 +1,49 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <h1 class="mb-4">Staff Dashboard</h1>
+
+    <div class="row g-4">
+
+        <!-- Receipt Requests -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Receipt Requests</h5>
+                    <p class="card-text">
+                        Review and approve receipt requests submitted by donors.
+                    </p>
+                    <a href="{% url 'core:admin-receipt-list' %}"
+                       class="btn btn-primary w-100">
+                        View Receipts
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Transactions -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">All Transactions</h5>
+                    <p class="card-text">
+                        View and monitor all donor transactions.
+                    </p>
+                    <a href="{% url 'core:admin-transaction-list' %}"
+                       class="btn btn-secondary w-100">
+                        View Transactions
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+
+    </div>
+
+</div>
+{% endblock %}

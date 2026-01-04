@@ -1,0 +1,21 @@
+<h2>Receipt Request</h2>
+
+<p><strong>Donor:</strong> {{ receipt.donor_name }}</p>
+<p><strong>PAN:</strong> {{ receipt.pan_number }}</p>
+<p><strong>Amount:</strong> ₹{{ receipt.donation_amount }}</p>
+<p><strong>Address:</strong> {{ receipt.address }}</p>
+
+<form method="post">
+  {% csrf_token %}
+
+  <label>Status</label>
+  <select name="status">
+    <option value="APPROVED">Approve</option>
+    <option value="REJECTED">Reject</option>
+  </select>
+
+  <label>Admin Remark</label>
+  <textarea name="admin_remark"></textarea>
+
+  <button type="submit">Submit</button>
+</form>
