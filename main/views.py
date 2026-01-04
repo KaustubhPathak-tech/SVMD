@@ -14,9 +14,8 @@ import string
 from datetime import timedelta, timezone as dt_timezone
 from django.utils import timezone
 from .utils import generate_receipt_pdf
-from django.shortcuts import render, redirect, get_list_or_404,get_object_or_404
+from django.shortcuts import render, redirect,get_object_or_404
 from django.template.loader import render_to_string
-from weasyprint import HTML
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.core.mail import send_mail,EmailMessage
@@ -272,32 +271,21 @@ def download_receipt_pdf(request, pk):
         status="APPROVED"
     )
 
-
-    context = {
-        "receipt": receipt,
+    assets = {
         "LOGO_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/wallpaperflare.com_wallpaper_plphlg.jpg",
         "TEMPLE_BG_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1766995002/temple_wwydkb.jpg",
         "DEITY_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1766994993/sample_n9cu8f.jpg",
         "SIGNATURE_URL": "https://res.cloudinary.com/dchlu4kif/image/upload/v1767523466/signature_iiw9fy.png",
     }
 
-    html_string = render_to_string(
-        "receipt_pdf.html",
-        context
-    )
-
-    pdf = HTML(string=html_string).write_pdf()
+    pdf = generate_receipt_pdf(receipt, assets)
 
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = (
         f'attachment; filename="Donation_Receipt_{receipt.id}.pdf"'
     )
-    
-    
 
     return response
-
-
 
 def user_logout(request):
     logout(request)

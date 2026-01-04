@@ -13,5 +13,4 @@ django-tailwind==4.4.2
 cloudinary==1.44.1
 django-cloudinary-storage
 python-dotenv
-weasyprint==67.0
-xhtml2pdf==0.2.17
+reportlab==4.4.7

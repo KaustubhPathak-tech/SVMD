@@ -573,10 +573,10 @@
 
         // Ctrl + Shift + I / J 
         // (DevTools) — not blocked to allow debugging in development
-        // if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
-        //   e.preventDefault();
-        //   warn();
-        // }
+        if (e.ctrlKey && e.key.toLocaleLowerCase() == 'j') {
+          e.preventDefault();
+          warn();
+        }
 
 
         // Save Page Ctrl + S
