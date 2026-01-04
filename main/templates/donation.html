@@ -343,6 +343,7 @@
             <div class="space-y-4 mt-8">
 
                 <!-- UPI -->
+
                 <div class="flex items-center gap-3 p-3 rounded-lg border bg-base-100 methods">
                     <span class="badge badge-success">UPI</span>
                     <div>
@@ -352,7 +353,12 @@
                         </p>
                     </div>
                 </div>
-
+                <div class="my-2">
+                    <a id="upiPayLink" href="upi://pay?pa=7798257964m@pnb&pn=Gayatri%20Dham%20Donation&cu=INR"
+                        class="btn btn-sm mt-4" style="display: none;">
+                        Donate via UPI App
+                    </a>
+                </div>
                 <!-- Bank Transfer -->
                 <div class="flex items-center gap-3 p-3 rounded-lg border bg-base-100 methods">
                     <span class="badge badge-info">Bank</span>
@@ -406,6 +412,13 @@
                 alt="UPI QR Code">
         </div>
 
+        <div id="upiPayLink" style="display: none;">
+            <a href="upi://pay?pa=7798257964m@pnb&pn=Gayatri%20Dham%20Donation&cu=INR"
+                class="btn btn-sm mt-4">
+                Donate via UPI App
+            </a>
+        </div>
+
         <div class="bank-disclaimer" role="note" aria-label="donation disclaimer">
             <strong>Disclaimer:</strong> Your donations are eligible for tax deduction under Section 80G of the Income
             Tax Act, 1961.
@@ -414,7 +427,8 @@
             <strong>
                 To receive your donation receipt for tax purposes,
                 <a href="/donation-receipt" class="apply-receipt-link">Apply here</a>.
-                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1767528828/new_myhbky.gif" alt="Important" class="imp-blink" aria-hidden="true" />
+                <img src="https://res.cloudinary.com/dchlu4kif/image/upload/v1767528828/new_myhbky.gif" alt="Important"
+                    class="imp-blink" aria-hidden="true" />
             </strong>
             <br><br>
 
@@ -434,13 +448,24 @@
 
     </div>
 
-    
+
     <script>
         if (window.location.pathname === "/donation-options") {
             window.addEventListener("load", function () {
                 donation_modal.showModal();
             });
         }
+    </script>
+
+    <script>
+        (function () {
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const upiLink = document.getElementById("upiPayLink");
+
+            if (isMobile && upiLink) {
+                upiLink.style.display = "inline-block";
+            }
+        })();
     </script>
 
 </body>
